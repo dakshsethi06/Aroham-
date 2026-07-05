@@ -1,0 +1,4 @@
+# Netlify configuration for hosting the static frontend
+[build]
+  base = "frontend"
+  publish = "."
