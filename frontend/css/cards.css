@@ -1,0 +1,53 @@
+/* ---------- Product cards ---------- */
+.product-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 28px;
+}
+
+.product-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; position: relative;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+
+/* tile: each product gets its own hue via --h set inline */
+.product-tile {
+  height: 168px; display: flex; align-items: center; justify-content: center;
+  font-size: 3.6rem; position: relative;
+  background:
+    radial-gradient(circle at 50% 120%, hsla(var(--h), 75%, 60%, 0.35), transparent 65%),
+    linear-gradient(160deg, hsl(var(--h), 45%, 96%), hsl(var(--h), 40%, 90%));
+}
+.product-tile::after {          /* faint ring halo behind the emoji */
+  content: ""; position: absolute; width: 110px; height: 110px;
+  border: 1.5px dashed hsla(var(--h), 55%, 45%, 0.45); border-radius: 50%;
+  animation: halo 30s linear infinite;
+}
+@keyframes halo { to { transform: rotate(360deg); } }
+
+.badge-tag {
+  position: absolute; top: 12px; left: 12px;
+  background: var(--night); color: var(--gold);
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 1px;
+  padding: 4px 10px; border-radius: 999px; text-transform: uppercase;
+}
+
+.product-body { padding: 18px 20px 22px; }
+.product-body h3 { font-size: 1.3rem; font-weight: 600; color: var(--night); margin-bottom: 3px; }
+.product-desc { font-size: 0.86rem; color: var(--muted); margin-bottom: 10px; min-height: 34px; }
+
+.rating { color: var(--gold); font-size: 0.82rem; letter-spacing: 2px; margin-bottom: 12px; }
+.rating small { color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+
+.product-row { display: flex; justify-content: space-between; align-items: center; }
+.price { font-family: 'Fraunces', serif; font-weight: 600; color: var(--maroon); font-size: 1.18rem; }
+.price small { font-size: 0.75rem; color: var(--muted); font-family: 'Outfit', sans-serif; font-weight: 400; }
+
+.add-btn {
+  background: var(--night); color: var(--ivory); border: none;
+  border-radius: 999px; padding: 9px 20px; font-weight: 600; font-size: 0.88rem;
+  cursor: pointer; transition: background 0.18s ease;
+}
+.add-btn:hover:not(:disabled) { background: var(--marigold-deep); }
+.add-btn:disabled { opacity: 0.45; cursor: not-allowed; }

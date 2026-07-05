@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Aroham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="../index.html" class="logo">ॐ Aroham</a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <a href="orders.html">Orders</a>
+      <a href="login.html" id="auth-link" class="active">Login</a>
+    </nav>
+  </header>
+
+  <main class="auth-wrap">
+    <div class="auth-card">
+      <h2>Welcome to Aroham</h2>
+      <p class="auth-sub">Login or create an account to place orders</p>
+      <form id="auth-form">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required />
+        <label>Password</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+        <button class="btn btn-primary full" onclick="handleLogin(event)">Login</button>
+        <button class="btn btn-outline full" onclick="handleSignup(event)">Create Account</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

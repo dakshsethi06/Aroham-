@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aroham — Sacred Vedic Products</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">ॐ Aroham</a>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="pages/cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <a href="pages/orders.html">Orders</a>
+      <a href="pages/login.html" id="auth-link">Login</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <svg class="mandala" viewBox="0 0 200 200" fill="none" stroke="#d9b26a" stroke-width="0.5">
+      <circle cx="100" cy="100" r="95" stroke-dasharray="2 5" />
+      <circle cx="100" cy="100" r="78" />
+      <circle cx="100" cy="100" r="60" stroke-dasharray="8 4" />
+      <circle cx="100" cy="100" r="42" />
+      <path d="M100 5 L100 195 M5 100 L195 100 M33 33 L167 167 M167 33 L33 167" stroke-dasharray="3 6" />
+      <circle cx="100" cy="100" r="24" stroke-dasharray="1 3" />
+    </svg>
+    <div class="hero-inner">
+      <p class="eyebrow">Sacred · Energised · Certified</p>
+      <h1>Bring home the<br /><em>blessings</em> of the cosmos</h1>
+      <p class="hero-sub">Rudraksha, gemstones, yantras and pooja essentials — sourced with devotion from the Himalayas, energised by Vedic rituals.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary">Shop Now</a>
+        <a href="pages/orders.html" class="btn btn-outline">Track Orders</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip">
+    <span>100% Energised Products</span>
+    <span>Lab-Certified Gemstones</span>
+    <span>Free Shipping over ₹999</span>
+    <span>Secure Razorpay Payments</span>
+  </div>
+
+  <section id="products" class="products-section">
+    <h2 class="section-title">Our Sacred Collection</h2>
+    <p class="section-sub">Each piece is purified and energised before it reaches your doorstep</p>
+    <div id="product-grid" class="product-grid">
+      <p class="loading">Loading products…</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span class="om">ॐ</span>
+    <p>© 2026 Aroham · Handcrafted spiritual products · Made in India 🇮🇳</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders — Aroham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+</head>
+<body>
+  <header class="navbar">
+    <a href="../index.html" class="logo">ॐ Aroham</a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <a href="orders.html" class="active">Orders</a>
+      <a href="login.html" id="auth-link">Login</a>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <h2 class="section-title">My Orders</h2>
+    <div id="orders-list"><p class="loading">Loading orders…</p></div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/orders.js"></script>
+</body>
+</html>

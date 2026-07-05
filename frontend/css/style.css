@@ -1,0 +1,86 @@
+/* ---------- Aroham design tokens: "temple at dusk" ---------- */
+:root {
+  --night: #171233;        /* deep indigo sky */
+  --night-2: #251b52;      /* lighter indigo */
+  --ivory: #faf6ec;        /* warm page background */
+  --ink: #26200f;
+  --marigold: #ef9b2d;     /* primary action */
+  --marigold-deep: #d97f0e;
+  --gold: #d9b26a;         /* accents, ratings */
+  --maroon: #7a2a2a;
+  --muted: #8d7f66;
+  --card: #ffffff;
+  --line: #ecdfc4;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(23, 18, 51, 0.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+h1, h2, h3 { font-family: 'Fraunces', serif; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- Navbar (dark, floats over hero) ---------- */
+.navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 6vw;
+  background: var(--night);
+  position: sticky; top: 0; z-index: 20;
+  border-bottom: 1px solid rgba(217, 178, 106, 0.25);
+}
+.logo {
+  font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 0.5px;
+}
+.nav-links { display: flex; gap: 28px; align-items: center; font-weight: 500; font-size: 0.95rem; }
+.nav-links a { color: rgba(250, 246, 236, 0.85); position: relative; }
+.nav-links a:hover, .nav-links a.active { color: var(--marigold); }
+.nav-links a.active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 2px; background: var(--marigold); border-radius: 2px;
+}
+.cart-badge {
+  background: var(--marigold); color: var(--night);
+  border-radius: 999px; padding: 1px 8px; font-size: 0.72rem; font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block; padding: 13px 32px; border-radius: 999px; border: none;
+  font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
+  cursor: pointer; transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(239, 155, 45, 0.35); }
+.btn-primary { background: linear-gradient(135deg, var(--marigold), var(--marigold-deep)); color: #fff; }
+.btn-outline { background: transparent; border: 1.5px solid var(--gold); color: var(--gold); }
+.btn-outline:hover { box-shadow: none; background: rgba(217, 178, 106, 0.12); }
+
+.section-title { text-align: center; font-size: 2.3rem; font-weight: 600; color: var(--night); margin: 64px 0 8px; }
+.section-sub { text-align: center; color: var(--muted); margin-bottom: 36px; font-size: 0.98rem; }
+
+.footer {
+  text-align: center; padding: 36px 20px; margin-top: 80px;
+  background: var(--night); color: rgba(250, 246, 236, 0.65); font-size: 0.88rem;
+}
+.footer .om { color: var(--gold); font-size: 1.3rem; display: block; margin-bottom: 8px; }
+
+.loading { text-align: center; color: var(--muted); grid-column: 1 / -1; padding: 40px 0; }
+
+.toast {
+  position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+  background: var(--night); color: var(--ivory); border: 1px solid var(--gold);
+  padding: 12px 26px; border-radius: 999px; font-size: 0.9rem; z-index: 100;
+  animation: toast-in 0.25s ease;
+}
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
