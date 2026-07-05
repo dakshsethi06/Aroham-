@@ -1,0 +1,52 @@
+const router = require("express").Router();
+const supabase = require("../config/supabase");
+
+// POST /api/auth/signup - Email & password signup
+router.post("/signup", async (req, res) => {
+  const {
+    email, password, fullName, phone, otp,
+    address, gender, dob, tob, pobCity, pobState, pobCountry
+  } = req.body;
+
+  try {
+    if (otp !== "1234") {
+      return res.status(400).json({ error: "Invalid OTP. Please enter 1234." });
+    }
+
+    // Create user in Supabase auth using email + password (marks email_confirm: true to bypass verification)
+    const { data, error: authErr } = await supabase.auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+      user_metadata: { full_name: fullName, phone }
+    });
+
+    if (authErr) throw authErr;
+    if (!data.user) throw new Error("Failed to create user account");
+
+    // Insert user details into public users table
+    const { error: profErr } = await supabase
+      .from("users")
+      .insert({
+        id: data.user.id,
+        full_name: fullName,
+        phone,
+        email,
+        gender,
+        dob,
+        tob: tob || null,
+        pob_city: pobCity || null,
+        pob_state: pobState || null,
+        pob_country: pobCountry || null,
+        address: address || null
+      });
+
+    if (profErr) throw profErr;
+
+    res.json({ success: true, message: "Account created successfully" });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+module.exports = router;

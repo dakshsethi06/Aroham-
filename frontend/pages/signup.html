@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Aroham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" /><link rel="stylesheet" href="../css/pages.css" />
+  <style>
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group-full { grid-column: span 2; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a href="../index.html" class="logo">ॐ Aroham</a>
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
+      <a href="orders.html">Orders</a>
+      <a href="login.html" id="auth-link">Login</a>
+    </nav>
+  </header>
+
+  <main class="auth-wrap" style="padding: 40px 20px;">
+    <div class="auth-card" style="max-width: 500px; width: 100%;">
+      <h2>Create Account</h2>
+      <p class="auth-sub" style="margin-bottom: 20px;">Join Aroham for sacred blessings</p>
+      <form id="signup-form" onsubmit="handleDoneSubmit(event)" class="form-grid">
+        <div class="form-group"><label>Full Name *</label><input type="text" id="name" placeholder="John Doe" required /></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="email" placeholder="john@example.com" required /></div>
+        <div class="form-group form-group-full" style="display: flex; gap: 8px; align-items: flex-end;">
+          <div style="flex: 1;"><label>Phone Number *</label><input type="tel" id="phone" placeholder="9876543210" required /></div>
+          <button type="button" id="btn-verify-phone" class="btn btn-outline" style="padding: 9px 16px;" onclick="triggerPhoneVerification()">Verify</button>
+          <span id="phone-verified-badge" class="hidden" style="color: #ef9b2d; font-weight: 600; font-size: 0.9rem; padding: 10px 0;">✓ Verified</span>
+        </div>
+        <div class="form-group"><label>Password *</label><input type="password" id="password" placeholder="••••••••" required /></div>
+        <div class="form-group"><label>Gender *</label>
+          <select id="gender" required style="width:100%; padding:10px; border-radius:6px; border:1.5px solid var(--line); background:#fff;"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select>
+        </div>
+        <div class="form-group"><label>Date of Birth *</label><input type="date" id="dob" required /></div>
+        <div class="form-group"><label>Time of Birth</label><input type="time" id="tob" /></div>
+        <div class="form-group form-group-full"><label>Place of Birth (City, State, Country)</label><input type="text" id="pob" placeholder="Mumbai, MH, India" /></div>
+        <div class="form-group form-group-full"><label>Street Address</label><input type="text" id="address" placeholder="123, Lotus Lane, Sector 4" /></div>
+        <button type="submit" class="btn btn-primary full form-group-full" style="margin-top: 10px;">Done</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- OTP Verification Modal -->
+  <div id="otp-modal" class="modal-overlay hidden">
+    <div class="auth-card" style="max-width: 360px; width: 90%; text-align: center; background: var(--bg); border: 2px solid var(--gold);">
+      <h2>Enter OTP</h2>
+      <p class="auth-sub" style="margin-bottom: 20px;">We sent a 4-digit code to your phone.</p>
+      <form id="otp-form" onsubmit="verifyOtp(event)">
+        <input type="text" id="otp-input" maxlength="4" placeholder="••••" required style="font-size: 2rem; text-align: center; letter-spacing: 12px; padding: 12px; margin-bottom: 18px; width: 80%;" />
+        <button type="submit" class="btn btn-primary full">Verify</button>
+        <button type="button" class="btn btn-outline full" style="margin-top: 10px;" onclick="closeOtpModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/signup.js"></script>
+</body>
+</html>

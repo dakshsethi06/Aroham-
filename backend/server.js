@@ -17,6 +17,8 @@ app.use("/api/products", require("./routes/products"));
 app.use("/api/cart", require("./routes/cart"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/payments", require("./routes/payments"));
+app.use("/api/addresses", require("./routes/addresses"));
+app.use("/api/auth", require("./routes/auth"));
 
 app.get("/api/health", (req, res) => res.json({ status: "ok", service: "aroham-backend" }));
 

@@ -77,3 +77,21 @@ insert into products (name, description, price, stock, emoji) values
 ('Yellow Sapphire', 'Pukhraj for Jupiter blessings', 799900, 10, '💛'),
 ('Pooja Thali Set', 'Complete brass thali, 7 items', 129900, 40, '🪔'),
 ('Gemstone Bracelet', '7-chakra healing bracelet', 39900, 60, '🧿');
+
+create table if not exists cart_items (
+  id bigint generated always as identity primary key,
+  user_id uuid references auth.users not null, product_id bigint references products not null,
+  qty int not null default 1, is_temporary boolean not null default false, created_at timestamptz default now()
+);
+create table if not exists addresses (
+  id bigint generated always as identity primary key, user_id uuid references auth.users not null,
+  name text not null, phone text not null, email text, address text not null, city text not null, pincode text not null, created_at timestamptz default now()
+);
+create table if not exists users (
+  id uuid references auth.users on delete cascade primary key,
+  full_name text not null, phone text not null, email text, gender text not null, dob date not null,
+  tob time, pob_city text, pob_state text, pob_country text, address text, created_at timestamptz default now()
+);
+alter table cart_items enable row level security; alter table addresses enable row level security; alter table users enable row level security;
+create policy "Allow user insert" on users for insert with check (true);
+create policy "Allow user select own" on users for select using (auth.uid() = id);
