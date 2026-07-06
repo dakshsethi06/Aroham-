@@ -19,32 +19,27 @@ async function fetchProducts() {
 function stars(id) {
   const rating = 4 + ((id * 7) % 10) / 10;
   const count = 120 + ((id * 37) % 380);
-  return `<div class="rating-stars" style="color:var(--marigold); font-size:0.85rem; display:flex; align-items:center; gap:4px; margin: 4px 0 8px 0;">★★★★★ <span style="color:var(--muted); font-size:0.75rem;">${rating.toFixed(1)} (${count})</span></div>`;
+  return `<div class="rating">★★★★★<small>${rating.toFixed(1)} (${count})</small></div>`;
 }
 function productCard(p, idx) {
   const out = p.stock !== undefined && p.stock <= 0;
   const hue = HUES[idx % HUES.length];
-  const strikePrice = formatINR(Math.floor(p.price * 1.3));
   return `
-    <div class="product-card" style="position: relative;">
-      <div class="product-tile" style="--h:${hue}; position: relative; overflow: hidden;">
-        <span class="badge-tag">${BADGES[idx % BADGES.length]}</span>
-        <button class="wishlist-overlay-btn" onclick="showToast('Added to Wishlist! ❤️')" style="position: absolute; right: 12px; top: 12px; border: none; background: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.06); z-index: 5;">❤️</button>
-        <span style="font-size: 4rem;">${p.emoji || "🕉️"}</span>
-        
-        ${out ? '' : `
-          <div class="quick-add-bar" onclick='addToCart(${JSON.stringify(p)})' style="position: absolute; bottom: 0; left: 0; right: 0; background: var(--maroon); color: #fff; text-align: center; padding: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transform: translateY(100%); transition: transform 0.2s ease; z-index: 6;">
-            🛒 Quick Add to Cart
+    <div class="product-card">
+      <div class="product-tile" style="--h:${hue}"><span class="badge-tag">${BADGES[idx % BADGES.length]}</span>${p.emoji || "🕉️"}</div>
+      <div class="product-body">
+        <h3>${p.name}</h3>
+        <p class="product-desc">${p.description || ""}</p>${stars(p.id)}
+        <div class="product-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <span class="price">${formatINR(p.price)} <small>incl. tax</small></span>
           </div>
-        `}
-      </div>
-      <div class="product-body" style="text-align: left; padding: 18px 14px;">
-        <h3 style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; color: var(--night); margin-bottom: 4px;">${p.name}</h3>
-        <p class="product-desc" style="color: var(--muted); font-size: 0.85rem; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.description || "Consecrated Vedic Product"}</p>
-        ${stars(p.id)}
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <span class="price" style="font-size: 1.15rem; font-weight: 700; color: var(--maroon);">${formatINR(p.price)}</span>
-          <span style="font-size: 0.88rem; color: var(--muted); text-decoration: line-through;">${strikePrice}</span>
+          <div style="display: flex; gap: 6px;">
+            ${out ? `<button class="add-btn" style="flex: 1;" disabled>Out of stock</button>` : `
+              <button class="add-btn" style="flex: 1; padding: 9px 8px;" onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+              <button class="buy-btn" style="flex: 1; padding: 9px 8px; background: #ef9b2d; color: #fff; border: none; border-radius: 999px; font-weight: 600; font-size: 0.88rem; cursor: pointer;" onclick='buyNow(${JSON.stringify(p)})'>Buy Now</button>
+            `}
+          </div>
         </div>
       </div>
     </div>`;
