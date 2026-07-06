@@ -566,3 +566,43 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ---- Payment Accordion & UPI app selectors ---- */
+.upi-app-badge {
+  transition: border-color 0.16s ease, background-color 0.16s ease;
+}
+.upi-app-badge:hover {
+  border-color: var(--marigold) !important;
+  background-color: var(--ivory) !important;
+}
+
+.accordion-header {
+  transition: background-color 0.2s ease;
+}
+.accordion-header:hover {
+  background-color: #F6F2EB !important;
+}
+
+.accordion-item.active {
+  box-shadow: 0 4px 12px rgba(74, 21, 33, 0.02);
+  border-color: var(--marigold) !important;
+}
+
+/* ---- Order Confirmation Timeline columns ---- */
+.frequent-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.frequent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(74, 21, 33, 0.05);
+}
+
+@media (max-width: 900px) {
+  .confirmation-columns {
+    grid-template-columns: 1fr !important;
+  }
+  .confirmation-columns > div {
+    width: 100% !important;
+  }
+}
+

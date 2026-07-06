@@ -18,8 +18,14 @@ async function showAddressSection() {
   const s3Badge = document.getElementById("step-3-badge").querySelector(".step-num");
   
   if (s1Badge) { s1Badge.style.background = "var(--gold)"; s1Badge.textContent = "✓"; s1Badge.style.color = "#fff"; }
-  if (s2Badge) { s2Badge.style.background = "var(--maroon)"; s2Badge.style.color = "#fff"; }
-  if (s3Badge) { s3Badge.style.background = "var(--line)"; s3Badge.style.color = "var(--muted)"; }
+  if (s2Badge) { s2Badge.style.background = "var(--maroon)"; s2Badge.textContent = "2"; s2Badge.style.color = "#fff"; }
+  if (s3Badge) { s3Badge.style.background = "var(--line)"; s3Badge.textContent = "3"; s3Badge.style.color = "var(--muted)"; }
+
+  // Hide other steps
+  document.getElementById("cart-items-section").classList.add("hidden");
+  document.getElementById("payment-section").classList.add("hidden");
+  document.getElementById("delivering-to-card").classList.add("hidden");
+  document.getElementById("address-section").classList.remove("hidden");
 
   try {
     const saved = await api("/addresses");
@@ -62,9 +68,6 @@ async function showAddressSection() {
       }
     }
   } catch (e) { console.error(e); }
-
-  document.getElementById("cart-items-section").classList.add("hidden");
-  document.getElementById("address-section").classList.remove("hidden");
 }
 
 function selectSavedAddress(card, address) {
@@ -126,6 +129,10 @@ async function proceedToPayment(e) {
 
   showToast("Shipping address confirmed!");
 
+  // Switch views
+  document.getElementById("address-section").classList.add("hidden");
+  document.getElementById("payment-section").classList.remove("hidden");
+
   // Switch titles to payment step
   document.getElementById("cart-breadcrumb-active").textContent = "Secure Payment";
   document.getElementById("cart-page-title").textContent = "Secure Payment";
@@ -137,10 +144,61 @@ async function proceedToPayment(e) {
   if (s2Badge) { s2Badge.style.background = "var(--gold)"; s2Badge.textContent = "✓"; s2Badge.style.color = "#fff"; }
   if (s3Badge) { s3Badge.style.background = "var(--maroon)"; s3Badge.style.color = "#fff"; }
 
+  // Populate Delivering To Card
+  document.getElementById("delivering-name").textContent = `${window.checkoutAddress.name} | ${window.checkoutAddress.phone}`;
+  document.getElementById("delivering-address").textContent = `${window.checkoutAddress.address}, ${window.checkoutAddress.city} - ${window.checkoutAddress.pincode}`;
+  document.getElementById("delivering-to-card").classList.remove("hidden");
+
   // Toggle checkout action control
   document.getElementById("cart-items-actions").classList.add("hidden");
   document.getElementById("btn-pay").classList.remove("hidden");
   document.querySelector(".cart-right-col").scrollIntoView({ behavior: "smooth" });
+}
+
+// ---------- Payment Method Accordion Logic ----------
+function toggleAccordion(header) {
+  const item = header.parentElement;
+  const isActive = item.classList.contains("active");
+
+  // Collapse all accordion items
+  document.querySelectorAll(".accordion-item").forEach(i => {
+    i.classList.remove("active");
+    i.querySelector(".accordion-body").classList.add("hidden");
+    const Arrow = i.querySelector(".acc-arrow");
+    if (Arrow) Arrow.textContent = "▼";
+    const radio = i.querySelector("input[name='payment-method-radio']");
+    if (radio) radio.checked = false;
+  });
+
+  if (!isActive) {
+    item.classList.add("active");
+    item.querySelector(".accordion-body").classList.remove("hidden");
+    const Arrow = item.querySelector(".acc-arrow");
+    if (Arrow) Arrow.textContent = "▲";
+    const radio = item.querySelector("input[name='payment-method-radio']");
+    if (radio) radio.checked = true;
+  }
+}
+
+function selectUpiApp(badge) {
+  document.querySelectorAll(".upi-app-badge").forEach(b => {
+    b.style.borderColor = "var(--line)";
+    b.style.background = "";
+  });
+  badge.style.borderColor = "var(--marigold)";
+  badge.style.background = "var(--ivory)";
+  
+  // Fill sample UPI ID
+  const appName = badge.querySelector("span:last-child").textContent.toLowerCase().replace(" ", "");
+  document.getElementById("upi-id-input").value = `arohamstore@${appName}`;
+}
+
+function verifyUpiId() {
+  const upiId = document.getElementById("upi-id-input").value.trim();
+  if (!upiId || !upiId.includes("@")) {
+    return showToast("Please enter a valid UPI ID (e.g. username@upi)");
+  }
+  showToast("UPI ID verified successfully! ✓");
 }
 
 async function payNow() {
@@ -168,9 +226,11 @@ async function payNow() {
 async function verifyPayment(orderId, r) {
   try {
     await api("/payments/verify", { method: "POST", body: JSON.stringify({ orderId, ...r }) });
-    if (!window.isBuyNow) saveCart([]); // If standard checkout, clear client backup
+    if (!window.isBuyNow) saveCart([]); // Clear backup
     showToast("Payment verified! Order confirmed 🎉");
-    setTimeout(() => (window.location.href = "orders.html"), 1200);
+    setTimeout(() => {
+      window.location.href = `confirmation.html?orderId=${orderId}`;
+    }, 1200);
   } catch (e) { showToast("Verification failed: " + e.message); }
 }
 

@@ -147,6 +147,150 @@
           </div>
         </form>
       </div>
+
+      <!-- 3. Payment Method Section -->
+      <div id="payment-section" class="cart-section hidden" style="text-align: left;">
+        <h3 style="font-family:'Fraunces', serif; font-size:1.45rem; color:var(--maroon); margin-bottom:4px;">Payment Method</h3>
+        <p style="color:var(--muted); font-size:0.88rem; margin-bottom:24px;">Choose how you'd like to complete your order</p>
+
+        <!-- Accordion container -->
+        <div class="payment-accordion" style="display:flex; flex-direction:column; gap:12px; margin-bottom:30px;">
+          <!-- UPI Accordion -->
+          <div class="accordion-item active" style="border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div class="accordion-header" onclick="toggleAccordion(this)" style="padding: 18px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; background: #FAF7F5; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="payment-method-radio" checked style="accent-color: var(--maroon);" />
+                <span style="font-size: 1.3rem;">⚡</span>
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--night);">UPI</strong>
+                  <span style="font-size: 0.8rem; color: var(--muted);">Pay via any UPI app instantly</span>
+                </div>
+              </div>
+              <span class="acc-arrow" style="font-size: 0.8rem; color: var(--muted);">▲</span>
+            </div>
+            <div class="accordion-body" style="padding: 20px; border-top: 1px solid var(--line);">
+              <span style="display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 12px;">Pay with App</span>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <div class="upi-app-badge" onclick="selectUpiApp(this)" style="border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; min-width: 80px; flex: 1; text-align: center;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: #1A73E8; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">G</span>
+                  <span style="font-size: 0.75rem; font-weight: 600;">Google Pay</span>
+                </div>
+                <div class="upi-app-badge" onclick="selectUpiApp(this)" style="border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; min-width: 80px; flex: 1; text-align: center;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: #5f259f; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">P</span>
+                  <span style="font-size: 0.75rem; font-weight: 600;">PhonePe</span>
+                </div>
+                <div class="upi-app-badge" onclick="selectUpiApp(this)" style="border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; min-width: 80px; flex: 1; text-align: center;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: #00baf2; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">P</span>
+                  <span style="font-size: 0.75rem; font-weight: 600;">Paytm</span>
+                </div>
+                <div class="upi-app-badge" onclick="selectUpiApp(this)" style="border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; min-width: 80px; flex: 1; text-align: center;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: #005A9C; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">B</span>
+                  <span style="font-size: 0.75rem; font-weight: 600;">BHIM</span>
+                </div>
+                <div class="upi-app-badge" onclick="selectUpiApp(this)" style="border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; min-width: 80px; flex: 1; text-align: center;">
+                  <span style="width: 28px; height: 28px; border-radius: 50%; background: #FF9900; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem;">A</span>
+                  <span style="font-size: 0.75rem; font-weight: 600;">Amazon Pay</span>
+                </div>
+              </div>
+              <span style="display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px;">Or Enter UPI ID</span>
+              <div style="display: flex; gap: 10px;">
+                <input type="text" id="upi-id-input" placeholder="username@upi" style="flex: 1; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.9rem;" />
+                <button type="button" class="btn btn-primary" onclick="verifyUpiId()" style="padding: 10px 20px; font-size: 0.85rem;">Verify</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wallets Accordion (Collapsed) -->
+          <div class="accordion-item" style="border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div class="accordion-header" onclick="toggleAccordion(this)" style="padding: 18px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="payment-method-radio" style="accent-color: var(--maroon);" />
+                <span style="font-size: 1.3rem;">👜</span>
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--night);">Wallets</strong>
+                  <span style="font-size: 0.8rem; color: var(--muted);">Amazon Pay, Paytm, PhonePe & more</span>
+                </div>
+              </div>
+              <span class="acc-arrow" style="font-size: 0.8rem; color: var(--muted);">▼</span>
+            </div>
+            <div class="accordion-body hidden" style="padding: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem;">
+              Wallets will be prompted during final Razorpay secure popup.
+            </div>
+          </div>
+
+          <!-- EMI Accordion (Collapsed) -->
+          <div class="accordion-item" style="border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div class="accordion-header" onclick="toggleAccordion(this)" style="padding: 18px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="payment-method-radio" style="accent-color: var(--maroon);" />
+                <span style="font-size: 1.3rem;">💳</span>
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--night);">EMI</strong>
+                  <span style="font-size: 0.8rem; color: var(--muted);">No-cost EMI on cards & Bajaj Finance</span>
+                </div>
+              </div>
+              <span class="acc-arrow" style="font-size: 0.8rem; color: var(--muted);">▼</span>
+            </div>
+            <div class="accordion-body hidden" style="padding: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem;">
+              No-cost EMI option will be available in Razorpay popup for eligible orders.
+            </div>
+          </div>
+
+          <!-- Cash on Delivery Accordion (Collapsed) -->
+          <div class="accordion-item" style="border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff;">
+            <div class="accordion-header" onclick="toggleAccordion(this)" style="padding: 18px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 14px;">
+                <input type="radio" name="payment-method-radio" style="accent-color: var(--maroon);" />
+                <span style="font-size: 1.3rem;">📦</span>
+                <div>
+                  <strong style="display: block; font-size: 0.95rem; color: var(--night);">Cash on Delivery</strong>
+                  <span style="font-size: 0.8rem; color: var(--muted);">Pay when your order arrives</span>
+                </div>
+              </div>
+              <span class="acc-arrow" style="font-size: 0.8rem; color: var(--muted);">▼</span>
+            </div>
+            <div class="accordion-body hidden" style="padding: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem;">
+              COD orders carry an additional handling charge of ₹50. Select and hit Place Order to complete.
+            </div>
+          </div>
+        </div>
+
+        <!-- Sacred Intent card -->
+        <div style="background:#FFF9F3; border:1px solid var(--line); border-radius:16px; padding:24px; display:flex; align-items:flex-start; gap:16px; margin-bottom:30px;">
+          <span style="font-size: 2.2rem; line-height:1; display:block;">🪔</span>
+          <div style="font-size:0.9rem; line-height:1.5; color:var(--ink);">
+            <strong style="display:block; color:var(--maroon); margin-bottom:4px; font-weight:600;">Your Journey Begins Here</strong>
+            <span style="color:var(--muted);">Thank you for choosing authentic Vedic products. Your order will now enter our sacred preparation process — each item blessed, verified, and carefully packed before being dispatched to your home.</span>
+          </div>
+        </div>
+
+        <!-- Secure Checkout logos -->
+        <div style="background:#FAF7F5; border:1px solid var(--line); border-radius:16px; padding:20px; text-align:center;">
+          <strong style="display:block; font-size:0.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:14px; font-weight:700;">100% Secure Checkout</strong>
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
+            <div style="font-size:0.72rem; color:var(--muted);">
+              <span style="display:block; font-size:1.3rem; margin-bottom:4px;">🔒</span>
+              <strong>SSL Encryption</strong>
+              <div style="font-size:0.65rem; color:var(--muted); margin-top:2px;">256-bit secured</div>
+            </div>
+            <div style="font-size:0.72rem; color:var(--muted);">
+              <span style="display:block; font-size:1.3rem; margin-bottom:4px;">🛡️</span>
+              <strong>PCI DSS</strong>
+              <div style="font-size:0.65rem; color:var(--muted); margin-top:2px;">Level 1 compliant</div>
+            </div>
+            <div style="font-size:0.72rem; color:var(--muted);">
+              <span style="display:block; font-size:1.3rem; margin-bottom:4px;">💳</span>
+              <strong>Razorpay Secured</strong>
+              <div style="font-size:0.65rem; color:var(--muted); margin-top:2px;">Trusted gateway</div>
+            </div>
+            <div style="font-size:0.72rem; color:var(--muted);">
+              <span style="display:block; font-size:1.3rem; margin-bottom:4px;">🚫</span>
+              <strong>Zero Data Stored</strong>
+              <div style="font-size:0.65rem; color:var(--muted); margin-top:2px;">No card stored</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Right Column (Checkout Stepper, Totals Breakdown, Trust icons) -->
@@ -165,6 +309,16 @@
           <span class="step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--line); color: var(--muted); font-weight: 700; margin-bottom: 4px; font-size: 0.76rem;">3</span>
           <div style="color: var(--muted);">Payment</div>
         </div>
+      </div>
+
+      <!-- Delivering To Card (Active in Step 3/Payment) -->
+      <div id="delivering-to-card" class="hidden" style="background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 24px; text-align: left; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">Delivering To</span>
+          <a href="#" onclick="showAddressSection()" style="font-size: 0.8rem; font-weight: 600; color: var(--maroon); text-decoration: underline;">Change</a>
+        </div>
+        <strong id="delivering-name" style="display: block; font-size: 0.88rem; color: var(--night); margin-bottom: 2px;">-</strong>
+        <span id="delivering-address" style="display: block; font-size: 0.84rem; color: var(--muted); line-height: 1.4;">-</span>
       </div>
 
       <!-- Order Summary Card -->
