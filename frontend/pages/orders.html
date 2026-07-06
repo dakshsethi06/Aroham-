@@ -8,20 +8,47 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/pages.css" />
 </head>
-<body>
+<body style="background: #FDFBFA;">
+  <!-- Light Header Navbar (Matches Figma) -->
   <header class="navbar">
-    <a href="../index.html" class="logo">ॐ Aroham</a>
+    <a href="../index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
+      <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
+      <span class="logo-text" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--maroon); letter-spacing: -0.5px;">Aroham</span>
+    </a>
     <nav class="nav-links">
-      <a href="../index.html">Home</a>
-      <a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
-      <a href="orders.html" class="active">Orders</a>
-      <a href="login.html" id="auth-link">Login</a>
+      <a href="../index.html">Collections</a>
+      <a href="../index.html#products">Shop by Problem</a>
+      <a href="../index.html#products">Yantras</a>
+      <a href="../index.html#products">Combos</a>
+      <a href="../index.html#products">About</a>
+      <a href="../index.html#products">Blog</a>
     </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">🔍</span>
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">❤️</span>
+      <a href="cart.html" style="position: relative; display: flex; align-items: center; gap: 4px;">
+        <span style="font-size: 1.15rem;">🛒</span>
+        <span id="cart-count" class="cart-badge" style="position: absolute; top: -8px; right: -12px;">0</span>
+      </a>
+      <a href="login.html" id="auth-link" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.88rem; margin-left: 10px;">Sign In</a>
+    </div>
   </header>
 
-  <main class="page-wrap">
-    <h2 class="section-title">My Orders</h2>
-    <div id="orders-list"><p class="loading">Loading orders…</p></div>
+  <!-- Premium header banner -->
+  <div style="background: #FDFBFAF2; border-bottom: 1px solid var(--line); padding: 40px 6vw 44px; text-align: left;">
+    <div class="breadcrumbs" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; gap: 6px; font-weight: 500;">
+      <a href="../index.html" style="color: var(--maroon);">Home</a>
+      <span>&rsaquo;</span>
+      <span style="color: var(--ink);">My Orders</span>
+    </div>
+    <h1 style="font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; color: var(--maroon); margin-bottom: 6px;">My Orders</h1>
+    <p style="color: var(--muted); font-size: 1.05rem; max-width: 600px; line-height: 1.4; font-weight: 300;">Track the progress of your consecrations and order deliveries.</p>
+  </div>
+
+  <main style="max-width: 800px; margin: 40px auto 80px; padding: 0 6vw;">
+    <div id="orders-list">
+      <p class="loading">Loading orders…</p>
+    </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
