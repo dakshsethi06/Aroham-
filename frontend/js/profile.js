@@ -52,6 +52,10 @@ async function saveProfileDetails(e) {
     pobCountry: document.getElementById("prof-pob-country").value.trim(),
     address: document.getElementById("prof-address").value.trim()
   };
+  
+  if (!/^\d{10}$/.test(payload.phone)) {
+    return showToast("Phone number must be exactly 10 digits");
+  }
 
   try {
     showToast("Saving details...");

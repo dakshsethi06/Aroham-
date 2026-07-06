@@ -50,7 +50,10 @@ function advanceToStep2(e) {
 
   if (!name) return showToast("Please enter your full name");
   if (!window.isPhoneVerified) return showToast("Please verify your phone number first");
-  if (password.length < 6) return showToast("Password must be at least 6 characters");
+  if (password.length < 8) return showToast("Password must be at least 8 characters");
+  if (!/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
+    return showToast("Password must contain at least one letter and one number");
+  }
   if (password !== confirmPassword) return showToast("Passwords do not match");
 
   // Show Step 2, hide Step 1

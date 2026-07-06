@@ -21,6 +21,9 @@ router.get("/", requireAuth, async (req, res) => {
 // POST /api/addresses - Save a shipping address
 router.post("/", requireAuth, async (req, res) => {
   const { name, phone, email, address, city, pincode } = req.body;
+  if (!phone || !/^\d{10}$/.test(phone.trim())) {
+    return res.status(400).json({ error: "Phone number must be exactly 10 digits" });
+  }
   try {
     // Check if the exact address already exists to avoid duplication
     const { data: existing, error: findErr } = await supabase

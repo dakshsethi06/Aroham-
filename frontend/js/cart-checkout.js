@@ -123,6 +123,10 @@ async function proceedToPayment(e) {
     pincode: document.getElementById("shipping-pincode").value.trim()
   };
   
+  if (!/^\d{10}$/.test(window.checkoutAddress.phone)) {
+    return showToast("Phone number must be exactly 10 digits");
+  }
+  
   try {
     await api("/addresses", { method: "POST", body: JSON.stringify(window.checkoutAddress) });
   } catch (err) { console.error("Failed to save address", err); }

@@ -31,6 +31,15 @@ router.post("/signup", async (req, res) => {
     if (otp !== "1234") {
       return res.status(400).json({ error: "Invalid OTP. Please enter 1234." });
     }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: "Please enter a valid email address" });
+    }
+    if (!phone || !/^\d{10}$/.test(phone.trim())) {
+      return res.status(400).json({ error: "Phone number must be exactly 10 digits" });
+    }
+    if (!password || password.length < 8 || !/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
+      return res.status(400).json({ error: "Password must be at least 8 characters and contain at least one letter and one number" });
+    }
 
     // Create user in Supabase auth using email + password (marks email_confirm: true to bypass verification)
     const { data, error: authErr } = await supabase.auth.admin.createUser({
@@ -88,6 +97,9 @@ router.get("/profile", requireAuth, async (req, res) => {
 // POST /api/auth/profile - Update profile details
 router.post("/profile", requireAuth, async (req, res) => {
   const { fullName, phone, gender, dob, tob, pobCity, pobState, pobCountry, address } = req.body;
+  if (!phone || !/^\d{10}$/.test(phone.trim())) {
+    return res.status(400).json({ error: "Phone number must be exactly 10 digits" });
+  }
   try {
     const { data, error } = await supabase
       .from("users")

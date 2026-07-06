@@ -57,7 +57,7 @@ async function handleLogin(e) {
   // Validation checks (Bug 3)
   if (!emailOrPhone) return showToast("Email or Phone number is required");
   if (!password) return showToast("Password is required");
-  if (password.length < 6) return showToast("Password must be at least 6 characters");
+  if (password.length < 8) return showToast("Password must be at least 8 characters");
 
   let email = emailOrPhone;
   // If it's digits, it's a phone number (Bug 2)
