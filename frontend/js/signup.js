@@ -2,8 +2,8 @@
 window.isPhoneVerified = false;
 
 function triggerPhoneVerification() {
-  const phone = document.getElementById("phone").value.trim();
-  if (!phone) return showToast("Please enter phone number first");
+  const phone = document.getElementById("signup-phone").value.trim();
+  if (!phone || !/^\d{10}$/.test(phone)) return showToast("Please enter a valid 10-digit phone number first");
   document.getElementById("otp-modal").classList.remove("hidden");
   document.getElementById("otp-input").focus();
 }
@@ -18,31 +18,67 @@ function verifyOtp(e) {
   const otp = document.getElementById("otp-input").value.trim();
   if (otp !== "1234") { return showToast("Invalid OTP. Enter 1234."); }
   window.isPhoneVerified = true;
-  document.getElementById("phone").readOnly = true;
+  document.getElementById("signup-phone").readOnly = true;
   document.getElementById("btn-verify-phone").classList.add("hidden");
   document.getElementById("phone-verified-badge").classList.remove("hidden");
-  showToast("Phone verified successfully! ✓"); closeOtpModal();
+  showToast("Phone verified successfully! ✓"); 
+  closeOtpModal();
+  updateContinueButtonState();
+}
+
+function updateContinueButtonState() {
+  const termsChecked = document.getElementById("signup-terms").checked;
+  const btn = document.getElementById("btn-signup-continue");
+  if (!btn) return;
+  if (termsChecked && window.isPhoneVerified) {
+    btn.removeAttribute("disabled");
+    btn.style.background = ""; // Restore to primary button color
+    btn.style.cursor = "pointer";
+  } else {
+    btn.setAttribute("disabled", "true");
+    btn.style.background = "var(--muted)";
+    btn.style.cursor = "not-allowed";
+  }
+}
+
+function advanceToStep2(e) {
+  e.preventDefault();
+  const name = document.getElementById("signup-name").value.trim();
+  const phone = document.getElementById("signup-phone").value.trim();
+  const password = document.getElementById("signup-password").value;
+  const confirmPassword = document.getElementById("signup-confirm-password").value;
+
+  if (!name) return showToast("Please enter your full name");
+  if (!window.isPhoneVerified) return showToast("Please verify your phone number first");
+  if (password.length < 6) return showToast("Password must be at least 6 characters");
+  if (password !== confirmPassword) return showToast("Passwords do not match");
+
+  // Show Step 2, hide Step 1
+  document.getElementById("signup-step-1").classList.add("hidden");
+  document.getElementById("signup-step-2").classList.remove("hidden");
+}
+
+function goBackToStep1() {
+  document.getElementById("signup-step-2").classList.add("hidden");
+  document.getElementById("signup-step-1").classList.remove("hidden");
 }
 
 async function handleDoneSubmit(e) {
   e.preventDefault();
-  if (!window.isPhoneVerified) { return showToast("Please verify your phone number first"); }
+  
+  const fullName = document.getElementById("signup-name").value.trim();
+  const phone = document.getElementById("signup-phone").value.trim();
+  const password = document.getElementById("signup-password").value;
+  
+  const email = document.getElementById("signup-email").value.trim();
+  const gender = document.getElementById("signup-gender").value;
+  const dob = document.getElementById("signup-dob").value;
+  const tob = document.getElementById("signup-tob").value || null;
+  const address = document.getElementById("signup-address").value.trim() || null;
+  const pobVal = document.getElementById("signup-pob").value.trim();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const fullName = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const gender = document.getElementById("gender").value;
-  const dob = document.getElementById("dob").value;
-  const tob = document.getElementById("tob").value || null;
-  const address = document.getElementById("address").value.trim() || null;
-  const pobVal = document.getElementById("pob").value.trim();
-
-  // Client-side Validation Checks (Bug 3)
-  if (!fullName) return showToast("Full Name is required");
+  // Validate step 2
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showToast("Please enter a valid email address");
-  if (!phone || !/^\d{10}$/.test(phone)) return showToast("Please enter a valid 10-digit phone number");
-  if (!password || password.length < 6) return showToast("Password must be at least 6 characters");
   if (!gender) return showToast("Gender is required");
   if (!dob) return showToast("Date of Birth is required");
 
@@ -91,3 +127,14 @@ async function handleDoneSubmit(e) {
     }
   } catch (err) { showToast(err.message); }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const termsCheckbox = document.getElementById("signup-terms");
+  if (termsCheckbox) {
+    termsCheckbox.addEventListener("change", updateContinueButtonState);
+  }
+  const phoneInput = document.getElementById("signup-phone");
+  if (phoneInput) {
+    phoneInput.addEventListener("input", updateContinueButtonState);
+  }
+});

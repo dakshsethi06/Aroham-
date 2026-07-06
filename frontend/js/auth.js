@@ -106,7 +106,43 @@ async function checkRedirect() {
   }
 }
 
+function switchAuthTab(tab) {
+  const signinView = document.getElementById("signin-view");
+  const signupView = document.getElementById("signup-view");
+  const tabSignin = document.getElementById("tab-signin");
+  const tabSignup = document.getElementById("tab-signup");
+  if (!signinView || !signupView) return;
+
+  if (tab === "signin") {
+    signinView.classList.remove("hidden");
+    signupView.classList.add("hidden");
+    tabSignin.classList.add("active");
+    tabSignup.classList.remove("active");
+  } else {
+    signupView.classList.remove("hidden");
+    signinView.classList.add("hidden");
+    tabSignup.classList.add("active");
+    tabSignin.classList.remove("active");
+  }
+}
+
+function togglePasswordVisibility(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  if (input.type === "password") {
+    input.type = "text";
+    btn.textContent = "Hide";
+  } else {
+    input.type = "password";
+    btn.textContent = "Show";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   updateAuthLink();
   checkRedirect();
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("tab") === "signup") {
+    switchAuthTab("signup");
+  }
 });

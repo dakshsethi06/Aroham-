@@ -1,68 +1,175 @@
-/* ---------- Hero: night sky over the temple ---------- */
-.hero {
-  position: relative; overflow: hidden; text-align: center;
-  padding: 110px 6vw 130px;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(239, 155, 45, 0.28), transparent 60%),
-    radial-gradient(circle at 18% 25%, rgba(122, 82, 210, 0.25), transparent 45%),
-    linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
-  color: var(--ivory);
+/* ---------- Premium Hero with Vedic background image ---------- */
+.hero-premium {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 130px 6vw 150px;
+  background: 
+    linear-gradient(rgba(46, 11, 18, 0.72), rgba(46, 11, 18, 0.94)), 
+    url('../aroham_hero_bg.png') no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 480px;
 }
 
-/* twinkling stars */
-.hero::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent),
-    radial-gradient(1px 1px at 28% 60%, #ffe9c2, transparent),
-    radial-gradient(1.5px 1.5px at 44% 15%, #fff, transparent),
-    radial-gradient(1px 1px at 63% 42%, #ffe9c2, transparent),
-    radial-gradient(1.5px 1.5px at 78% 20%, #fff, transparent),
-    radial-gradient(1px 1px at 88% 55%, #ffe9c2, transparent),
-    radial-gradient(1px 1px at 52% 75%, #fff, transparent);
-  animation: twinkle 4.5s ease-in-out infinite alternate;
+/* Premium trust strip riding the bottom edge */
+.trust-strip-premium {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 36px;
+  margin: -36px 6vw 0;
+  padding: 20px 30px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 25px rgba(74, 21, 33, 0.05);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--maroon);
+  letter-spacing: 0.2px;
 }
-@keyframes twinkle { from { opacity: 0.45; } to { opacity: 1; } }
+.trust-strip-premium span::before {
+  content: "✻ ";
+  color: var(--marigold);
+  font-weight: bold;
+}
 
-/* signature: slowly rotating zodiac mandala */
-.mandala {
-  position: absolute; top: 50%; left: 50%; width: 720px; height: 720px;
-  transform: translate(-50%, -50%); opacity: 0.16; pointer-events: none;
-  animation: spin 140s linear infinite;
+/* ---------- Promises Grid (Why Thousands Choose Aroham) ---------- */
+.promises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.promise-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 36px 30px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.promise-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(74, 21, 33, 0.06);
+}
+.promise-icon {
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+  display: inline-block;
+}
+.promise-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--maroon);
+  margin-bottom: 10px;
+}
+.promise-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
 
-.hero-inner { position: relative; z-index: 2; }
-.eyebrow {
-  letter-spacing: 5px; text-transform: uppercase; font-size: 0.75rem;
-  font-weight: 600; color: var(--gold); margin-bottom: 20px;
+/* ---------- Vedic Solutions Pastel Grid ---------- */
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.hero h1 {
-  font-size: clamp(2.4rem, 5.6vw, 4rem); font-weight: 550;
-  line-height: 1.12; margin-bottom: 20px;
+.solution-card {
+  border-radius: var(--radius);
+  padding: 36px 30px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+  cursor: pointer;
 }
-.hero h1 em { font-style: italic; color: var(--marigold); }
-.hero-sub {
-  color: rgba(250, 246, 236, 0.78); max-width: 540px;
-  margin: 0 auto 34px; font-size: 1.06rem; font-weight: 300;
+.solution-card:hover {
+  transform: translateY(-4px);
 }
-.hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.solution-emoji {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.solution-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--maroon);
+  margin-bottom: 6px;
+}
+.solution-card p {
+  color: #553E42;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.solution-link {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--maroon);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+}
 
-/* trust strip riding the hero's bottom edge */
-.trust-strip {
-  position: relative; z-index: 3; display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 10px 34px;
-  margin: -34px 6vw 0; padding: 18px 24px;
-  background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  font-size: 0.88rem; font-weight: 500; color: var(--ink);
+/* Solution Specific Color Palettes (Figma Style) */
+.card-wealth {
+  background: #FDF2DB; /* Warm cream-orange */
 }
-.trust-strip span::before { content: "✻ "; color: var(--marigold); }
+.card-wealth:hover {
+  box-shadow: 0 12px 28px rgba(243, 198, 105, 0.22);
+}
+.card-love {
+  background: #FDE8E8; /* Pastel pink */
+}
+.card-love:hover {
+  box-shadow: 0 12px 28px rgba(243, 149, 149, 0.22);
+}
+.card-protection {
+  background: #EBF5FF; /* Pastel blue */
+}
+.card-protection:hover {
+  box-shadow: 0 12px 28px rgba(150, 194, 240, 0.22);
+}
+.card-harmony {
+  background: #EAFaf1; /* Pastel green */
+}
+.card-harmony:hover {
+  box-shadow: 0 12px 28px rgba(138, 222, 172, 0.22);
+}
+.card-career {
+  background: #F5EEFF; /* Pastel purple */
+}
+.card-career:hover {
+  box-shadow: 0 12px 28px rgba(210, 185, 237, 0.22);
+}
+.card-peace {
+  background: #E4F7FA; /* Pastel cyan */
+}
+.card-peace:hover {
+  box-shadow: 0 12px 28px rgba(156, 225, 234, 0.22);
+}
 
 .products-section { padding: 0 6vw; }
 
 @media (max-width: 640px) {
-  .nav-links { gap: 14px; font-size: 0.84rem; }
-  .hero { padding: 70px 6vw 100px; }
-  .mandala { width: 480px; height: 480px; }
+  .solutions-grid { grid-template-columns: 1fr; }
+  .promises-grid { grid-template-columns: 1fr; }
+  .hero-premium { padding: 90px 6vw 110px; }
 }

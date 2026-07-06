@@ -11,43 +11,123 @@
   <link rel="stylesheet" href="css/cards.css" />
 </head>
 <body>
+  <!-- Header Navbar (Figma style) -->
   <header class="navbar">
-    <a href="index.html" class="logo">ॐ Aroham</a>
+    <a href="index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
+      <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
+      <span class="logo-text" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--maroon); letter-spacing: -0.5px;">Aroham</span>
+    </a>
     <nav class="nav-links">
-      <a href="index.html" class="active">Home</a>
-      <a href="pages/cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a>
-      <a href="pages/orders.html">Orders</a>
-      <a href="pages/login.html" id="auth-link">Login</a>
+      <a href="index.html" class="active">Collections</a>
+      <a href="#products">Shop by Problem</a>
+      <a href="#products">Yantras</a>
+      <a href="#products">Combos</a>
+      <a href="#products">About</a>
+      <a href="#products">Blog</a>
     </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">🔍</span>
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">❤️</span>
+      <a href="pages/cart.html" style="position: relative; display: flex; align-items: center; gap: 4px;">
+        <span style="font-size: 1.15rem;">🛒</span>
+        <span id="cart-count" class="cart-badge" style="position: absolute; top: -8px; right: -12px;">0</span>
+      </a>
+      <a href="pages/login.html" id="auth-link" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.88rem; margin-left: 10px;">Sign In</a>
+    </div>
   </header>
 
-  <section class="hero">
-    <svg class="mandala" viewBox="0 0 200 200" fill="none" stroke="#d9b26a" stroke-width="0.5">
-      <circle cx="100" cy="100" r="95" stroke-dasharray="2 5" />
-      <circle cx="100" cy="100" r="78" />
-      <circle cx="100" cy="100" r="60" stroke-dasharray="8 4" />
-      <circle cx="100" cy="100" r="42" />
-      <path d="M100 5 L100 195 M5 100 L195 100 M33 33 L167 167 M167 33 L33 167" stroke-dasharray="3 6" />
-      <circle cx="100" cy="100" r="24" stroke-dasharray="1 3" />
-    </svg>
+  <!-- Hero Section -->
+  <section class="hero-premium">
     <div class="hero-inner">
-      <p class="eyebrow">Sacred · Energised · Certified</p>
-      <h1>Bring home the<br /><em>blessings</em> of the cosmos</h1>
-      <p class="hero-sub">Rudraksha, gemstones, yantras and pooja essentials — sourced with devotion from the Himalayas, energised by Vedic rituals.</p>
+      <p class="eyebrow" style="color: var(--marigold); letter-spacing: 4px; font-size: 0.76rem; font-weight: 600; text-transform: uppercase; margin-bottom: 16px;">India's Premium Vedic Marketplace</p>
+      <h1 style="font-size: clamp(2.6rem, 5vw, 4.2rem); font-family: 'Fraunces', serif; line-height: 1.1; font-weight: 500; color: #fff; margin-bottom: 20px;">Ancient Wisdom.<br /><span style="color: var(--marigold); font-style: italic;">Modern Living.</span></h1>
+      <p class="hero-sub" style="color: rgba(255, 255, 255, 0.82); font-size: 1.1rem; max-width: 600px; margin: 0 auto 36px; font-weight: 300; line-height: 1.6;">Authentic Vastu products recommended by renowned astrologers and spiritually energized through traditional temple rituals.</p>
       <div class="hero-cta">
-        <a href="#products" class="btn btn-primary">Shop Now</a>
-        <a href="pages/orders.html" class="btn btn-outline">Track Orders</a>
+        <a href="#products" class="btn btn-primary">Explore Collection &rarr;</a>
+        <a href="pages/orders.html" class="btn btn-outline" style="border-color: #fff; color: #fff;">Find Solutions &rarr;</a>
       </div>
     </div>
   </section>
 
-  <div class="trust-strip">
-    <span>100% Energised Products</span>
-    <span>Lab-Certified Gemstones</span>
-    <span>Free Shipping over ₹999</span>
-    <span>Secure Razorpay Payments</span>
+  <!-- Trust Ribbon -->
+  <div class="trust-strip-premium">
+    <span>Temple Energized</span>
+    <span>50,000+ Customers</span>
+    <span>Astrologer Recommended</span>
+    <span>Secure & Encrypted</span>
+    <span>Premium Packaging</span>
+    <span>Trusted Across India</span>
   </div>
 
+  <!-- Promises Grid -->
+  <section class="promises-section" style="padding: 80px 6vw 40px; text-align: center;">
+    <p style="color: var(--marigold); letter-spacing: 3px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Our Promise</p>
+    <h2 style="font-size: 2.3rem; font-family: 'Fraunces', serif; font-weight: 600; color: var(--maroon); margin-bottom: 12px;">Why Thousands Choose Aroham</h2>
+    <p style="color: var(--muted); max-width: 500px; margin: 0 auto 48px; font-size: 0.95rem;">We blend centuries of Vedic tradition with modern standards of quality and trust.</p>
+    <div class="promises-grid">
+      <div class="promise-card">
+        <div class="promise-icon">💎</div>
+        <h3>Authentic Products</h3>
+        <p>Ethically sourced from traditional artisans across India's sacred regions.</p>
+      </div>
+      <div class="promise-card">
+        <div class="promise-icon">🔥</div>
+        <h3>Temple Energized</h3>
+        <p>Every product undergoes Pran Pratishtha — a sacred consecration ritual.</p>
+      </div>
+      <div class="promise-card">
+        <div class="promise-icon">⭐</div>
+        <h3>Astrologer Recommended</h3>
+        <p>Curated by India's renowned Jyotish experts for proven effectiveness.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vedic Solutions Grid -->
+  <section class="solutions-section" style="padding: 40px 6vw 60px; text-align: center;">
+    <p style="color: var(--marigold); letter-spacing: 3px; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Vedic Solutions</p>
+    <h2 style="font-size: 2.3rem; font-family: 'Fraunces', serif; font-weight: 600; color: var(--maroon); margin-bottom: 36px;">Find Your Solution</h2>
+    <div class="solutions-grid">
+      <a href="#products" class="solution-card card-wealth">
+        <span class="solution-emoji">💰</span>
+        <h3>Wealth</h3>
+        <p>Attract abundance & financial growth</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+      <a href="#products" class="solution-card card-love">
+        <span class="solution-emoji">💖</span>
+        <h3>Love</h3>
+        <p>Strengthen bonds & attract partnership</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+      <a href="#products" class="solution-card card-protection">
+        <span class="solution-emoji">🛡️</span>
+        <h3>Protection</h3>
+        <p>Shield against negativity & evil eye</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+      <a href="#products" class="solution-card card-harmony">
+        <span class="solution-emoji">🏡</span>
+        <h3>Home Harmony</h3>
+        <p>Balance Vastu energy in your space</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+      <a href="#products" class="solution-card card-career">
+        <span class="solution-emoji">💼</span>
+        <h3>Career</h3>
+        <p>Unlock success & recognition at work</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+      <a href="#products" class="solution-card card-peace">
+        <span class="solution-emoji">🧘</span>
+        <h3>Peace</h3>
+        <p>Cultivate calm, clarity & wellbeing</p>
+        <span class="solution-link">Explore &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Products Section -->
   <section id="products" class="products-section">
     <h2 class="section-title">Our Sacred Collection</h2>
     <p class="section-sub">Each piece is purified and energised before it reaches your doorstep</p>
@@ -56,6 +136,7 @@
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <span class="om">ॐ</span>
     <p>© 2026 Aroham · Handcrafted spiritual products · Made in India 🇮🇳</p>
