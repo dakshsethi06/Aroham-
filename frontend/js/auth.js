@@ -19,6 +19,10 @@ async function updateAuthLink() {
   const link = document.getElementById("auth-link");
   if (!link) return;
   const user = await getUser();
+  
+  const profileLink = document.getElementById("profile-nav-link");
+  const ordersLink = document.getElementById("orders-nav-link");
+
   if (user) {
     link.textContent = "Logout";
     link.href = "#";
@@ -32,9 +36,16 @@ async function updateAuthLink() {
       showToast("Logged out");
       setTimeout(() => (window.location.href = ROOT + "index.html"), 800);
     };
+    
+    if (profileLink) profileLink.classList.remove("hidden");
+    if (ordersLink) ordersLink.classList.remove("hidden");
   } else {
     link.textContent = "Login";
     link.href = ROOT + "pages/login.html";
+    link.onclick = null;
+    
+    if (profileLink) profileLink.classList.add("hidden");
+    if (ordersLink) ordersLink.classList.add("hidden");
   }
 }
 

@@ -61,11 +61,57 @@ router.post("/signup", async (req, res) => {
       });
 
     if (profErr) throw profErr;
-
     res.json({ success: true, message: "Account created successfully" });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
+const requireAuth = require("../middleware/auth");
+
+// GET /api/auth/profile - Fetch profile details
+router.get("/profile", requireAuth, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", req.user.id)
+      .maybeSingle();
+
+    if (error) throw error;
+    res.json(data || {});
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// POST /api/auth/profile - Update profile details
+router.post("/profile", requireAuth, async (req, res) => {
+  const { fullName, phone, gender, dob, tob, pobCity, pobState, pobCountry, address } = req.body;
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        full_name: fullName,
+        phone: phone ? phone.trim() : null,
+        gender: gender || null,
+        dob: dob || null,
+        tob: tob || null,
+        pob_city: pobCity || null,
+        pob_state: pobState || null,
+        pob_country: pobCountry || null,
+        address: address || null
+      })
+      .eq("id", req.user.id)
+      .select()
+      .maybeSingle();
+
+    if (error) throw error;
+    res.json(data);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;
+

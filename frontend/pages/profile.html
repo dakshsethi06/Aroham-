@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — Aroham</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+</head>
+<body style="background: #FDFBFA;">
+  <!-- Light Header Navbar (Matches Figma) -->
+  <header class="navbar">
+    <a href="../index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
+      <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
+      <span class="logo-text" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--maroon); letter-spacing: -0.5px;">Aroham</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Collections</a>
+      <a href="../index.html#products">Shop by Problem</a>
+      <a href="../index.html#products">Yantras</a>
+      <a href="../index.html#products">Combos</a>
+      <a href="../index.html#products">About</a>
+      <a href="../index.html#products">Blog</a>
+      <a href="profile.html" id="profile-nav-link" class="active">Profile</a>
+      <a href="orders.html" id="orders-nav-link" class="hidden">Orders</a>
+    </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">🔍</span>
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">❤️</span>
+      <a href="cart.html" style="position: relative; display: flex; align-items: center; gap: 4px;">
+        <span style="font-size: 1.15rem;">🛒</span>
+        <span id="cart-count" class="cart-badge" style="position: absolute; top: -8px; right: -12px;">0</span>
+      </a>
+      <a href="login.html" id="auth-link" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.88rem; margin-left: 10px;">Sign In</a>
+    </div>
+  </header>
+
+  <!-- Profile Page Header -->
+  <div style="background: #FDFBFAF2; border-bottom: 1px solid var(--line); padding: 40px 6vw 44px; text-align: left;">
+    <div class="breadcrumbs" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; gap: 6px; font-weight: 500;">
+      <a href="../index.html" style="color: var(--maroon);">Home</a>
+      <span>&rsaquo;</span>
+      <span style="color: var(--ink);">My Profile</span>
+    </div>
+    <h1 style="font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; color: var(--maroon); margin-bottom: 6px;">My Profile</h1>
+    <p style="color: var(--muted); font-size: 1.05rem; max-width: 600px; line-height: 1.4; font-weight: 300;">Manage your credentials, birth details, and address for customized Vedic recommendations.</p>
+  </div>
+
+  <!-- Profile Content Container -->
+  <main style="max-width: 800px; margin: 40px auto 80px; padding: 0 6vw; text-align: left;">
+    <form id="profile-form" onsubmit="saveProfileDetails(event)" style="display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- Personal Info Section -->
+      <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+        <h3 style="font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--maroon); margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-weight: 600;">Personal Information</h3>
+        <div class="form-group-premium">
+          <label for="prof-fullname">Full Name</label>
+          <input type="text" id="prof-fullname" placeholder="E.g. Priya Sharma" required />
+        </div>
+        <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top: 14px;">
+          <div class="form-group-premium">
+            <label for="prof-email">Email Address</label>
+            <input type="email" id="prof-email" disabled style="background: var(--ivory); cursor: not-allowed;" />
+          </div>
+          <div class="form-group-premium">
+            <label for="prof-phone">Phone Number</label>
+            <input type="tel" id="prof-phone" placeholder="E.g. 9876543210" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- Vedic Astrological Parameters -->
+      <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+        <h3 style="font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--maroon); margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-weight: 600;">Vedic Astrological Parameters</h3>
+        <p style="color: var(--muted); font-size: 0.8rem; line-height: 1.4; margin-bottom: 18px;">Providing accurate details allows us to consecrate products relative to your birth stars (Kundali mapping).</p>
+        
+        <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group-premium">
+            <label for="prof-gender">Gender</label>
+            <select id="prof-gender" style="width: 100%; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.9rem;">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group-premium">
+            <label for="prof-dob">Date of Birth</label>
+            <input type="date" id="prof-dob" style="width: 100%; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.9rem;" />
+          </div>
+        </div>
+
+        <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top: 14px;">
+          <div class="form-group-premium">
+            <label for="prof-tob">Time of Birth</label>
+            <input type="time" id="prof-tob" style="width: 100%; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.9rem;" />
+          </div>
+          <div class="form-group-premium">
+            <label for="prof-pob-city">Place of Birth (City)</label>
+            <input type="text" id="prof-pob-city" placeholder="E.g. Ajmer" />
+          </div>
+        </div>
+
+        <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top: 14px;">
+          <div class="form-group-premium">
+            <label for="prof-pob-state">State</label>
+            <input type="text" id="prof-pob-state" placeholder="E.g. Rajasthan" />
+          </div>
+          <div class="form-group-premium">
+            <label for="prof-pob-country">Country</label>
+            <input type="text" id="prof-pob-country" placeholder="E.g. India" value="India" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Address Section -->
+      <div style="background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: var(--shadow);">
+        <h3 style="font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--maroon); margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 8px; font-weight: 600;">Default Address</h3>
+        <div class="form-group-premium">
+          <label for="prof-address">Address Details</label>
+          <textarea id="prof-address" rows="3" placeholder="E.g. Flat 4B, Sunrise Residency, Ajmer Road" style="width: 100%; padding: 12px; border: 1.5px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.9rem; resize: vertical;"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="padding: 14px 28px; font-size: 0.95rem; font-weight: 700; align-self: flex-start;">Save Changes</button>
+    </form>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>
