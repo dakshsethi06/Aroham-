@@ -50,18 +50,28 @@ function resetCheckoutState() {
 
 function showCartSection() {
   document.getElementById("address-section").classList.add("hidden");
+  document.getElementById("payment-section").classList.add("hidden");
+  document.getElementById("delivering-to-card").classList.add("hidden");
   document.getElementById("cart-items-section").classList.remove("hidden");
+  
+  // Hide pay button and show cart actions
+  const btnPay = document.getElementById("btn-pay");
+  if (btnPay) btnPay.classList.add("hidden");
+  const cartActions = document.getElementById("cart-items-actions");
+  if (cartActions) cartActions.classList.remove("hidden");
   
   // Set breadcrumbs & titles
   document.getElementById("cart-breadcrumb-active").textContent = "Your Cart";
   document.getElementById("cart-page-title").textContent = "Your Sacred Selections";
   document.getElementById("cart-page-subtitle").textContent = "You're one step closer to bringing positive energy and harmony into your life.";
   
-  // Update step indicators
-  document.getElementById("step-1-badge").querySelector(".step-num").style.background = "var(--maroon)";
-  document.getElementById("step-1-badge").querySelector(".step-num").style.color = "#fff";
-  document.getElementById("step-2-badge").querySelector(".step-num").style.background = "var(--line)";
-  document.getElementById("step-2-badge").querySelector(".step-num").style.color = "var(--muted)";
+  // Update step indicators (reset all three)
+  const s1 = document.getElementById("step-1-badge").querySelector(".step-num");
+  const s2 = document.getElementById("step-2-badge").querySelector(".step-num");
+  const s3 = document.getElementById("step-3-badge").querySelector(".step-num");
+  if (s1) { s1.style.background = "var(--maroon)"; s1.textContent = "1"; s1.style.color = "#fff"; }
+  if (s2) { s2.style.background = "var(--line)"; s2.textContent = "2"; s2.style.color = "var(--muted)"; }
+  if (s3) { s3.style.background = "var(--line)"; s3.textContent = "3"; s3.style.color = "var(--muted)"; }
 }
 
 async function addFrequentItem(id, name, price, emoji) {

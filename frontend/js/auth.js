@@ -101,7 +101,10 @@ async function handleSignup(e) {
   e.preventDefault();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
-  if (password.length < 6) return showToast("Password must be 6+ characters");
+  if (password.length < 8) return showToast("Password must be at least 8 characters");
+  if (!/[a-zA-Z]/.test(password) || !/\d/.test(password)) {
+    return showToast("Password must contain at least one letter and one number");
+  }
   const { error } = await db.auth.signUp({ email, password });
   if (error) return showToast(error.message);
   showToast("Account created! You can login now.");

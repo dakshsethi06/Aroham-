@@ -130,7 +130,7 @@
               <div class="form-group-premium">
                 <label for="signup-phone">Phone Number</label>
                 <div class="phone-verify-wrapper" style="display: flex; gap: 8px;">
-                  <input type="tel" id="signup-phone" placeholder="9876543210" required style="flex: 1;" />
+                  <input type="tel" id="signup-phone" placeholder="9876543210" maxlength="10" pattern="\d{10}" required style="flex: 1;" />
                   <button type="button" id="btn-verify-phone" class="btn btn-outline" style="padding: 10px 16px; font-size: 0.85rem;" onclick="triggerPhoneVerification()">Verify</button>
                   <span id="phone-verified-badge" class="hidden" style="color: var(--marigold); font-weight: 600; align-self: center; font-size: 0.9rem;">✓ Verified</span>
                 </div>

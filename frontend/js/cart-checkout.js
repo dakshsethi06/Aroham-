@@ -123,8 +123,20 @@ async function proceedToPayment(e) {
     pincode: document.getElementById("shipping-pincode").value.trim()
   };
   
+  if (!window.checkoutAddress.name) {
+    return showToast("Please enter recipient name");
+  }
   if (!/^\d{10}$/.test(window.checkoutAddress.phone)) {
     return showToast("Phone number must be exactly 10 digits");
+  }
+  if (!window.checkoutAddress.address) {
+    return showToast("Please enter a street address");
+  }
+  if (!window.checkoutAddress.city) {
+    return showToast("Please enter a city");
+  }
+  if (!window.checkoutAddress.pincode || !/^\d{6}$/.test(window.checkoutAddress.pincode)) {
+    return showToast("Please enter a valid 6-digit pincode");
   }
   
   try {

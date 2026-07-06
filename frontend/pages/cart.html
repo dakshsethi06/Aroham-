@@ -118,7 +118,7 @@
             <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
               <div class="form-group-premium">
                 <label for="shipping-phone">Phone Number</label>
-                <input type="tel" id="shipping-phone" placeholder="9876543210" required />
+                <input type="tel" id="shipping-phone" placeholder="9876543210" maxlength="10" pattern="\d{10}" required />
               </div>
               <div class="form-group-premium">
                 <label for="shipping-email">Email Address</label>
