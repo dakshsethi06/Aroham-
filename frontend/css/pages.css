@@ -519,3 +519,50 @@
 .order-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
 .pay-id { color: var(--muted); font-size: 0.78rem; }
 .order-foot strong { font-family: 'Fraunces', serif; color: var(--maroon); font-size: 1.1rem; }
+
+/* ---- Custom Figma Cart Overhauls ---- */
+.cart-card-premium {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cart-card-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(74, 21, 33, 0.04);
+}
+
+.cart-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.tag-consecrated {
+  background: #FDF2DB;
+  color: var(--marigold-deep);
+}
+
+.tag-astrologer {
+  background: #FDE8E8;
+  color: var(--maroon);
+}
+
+.qty-pill-selector button:hover {
+  background: rgba(74, 21, 33, 0.06);
+}
+
+.address-radio-card.active {
+  box-shadow: 0 4px 12px rgba(212, 155, 44, 0.08);
+}
+
+.frequent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(74, 21, 33, 0.05);
+}
+
+@media (max-width: 820px) {
+  .cart-container {
+    grid-template-columns: 1fr !important;
+  }
+}

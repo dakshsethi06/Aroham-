@@ -3,84 +3,296 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cart — Aroham</title>
+  <title>Your Sacred Selections — Aroham</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/pages.css" />
 </head>
 <body>
+  <!-- Light Header Navbar (Matches Figma) -->
   <header class="navbar">
-    <a href="../index.html" class="logo">ॐ Aroham</a>
+    <a href="../index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
+      <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
+      <span class="logo-text" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--maroon); letter-spacing: -0.5px;">Aroham</span>
+    </a>
     <nav class="nav-links">
-      <a href="../index.html">Home</a>
-      <a href="cart.html" class="active">Cart <span id="cart-count" class="cart-badge">0</span></a>
-      <a href="orders.html">Orders</a>
-      <a href="login.html" id="auth-link">Login</a>
+      <a href="../index.html">Collections</a>
+      <a href="../index.html#products">Shop by Problem</a>
+      <a href="../index.html#products">Yantras</a>
+      <a href="../index.html#products">Combos</a>
+      <a href="../index.html#products">About</a>
+      <a href="../index.html#products">Blog</a>
     </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">🔍</span>
+      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">❤️</span>
+      <a href="cart.html" style="position: relative; display: flex; align-items: center; gap: 4px;">
+        <span style="font-size: 1.15rem;">🛒</span>
+        <span id="cart-count" class="cart-badge" style="position: absolute; top: -8px; right: -12px;">0</span>
+      </a>
+      <a href="login.html" id="auth-link" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.88rem; margin-left: 10px;">Sign In</a>
+    </div>
   </header>
 
-  <main class="cart-container">
+  <!-- Page Breadcrumbs & Header -->
+  <div style="background: #FDFBFAF2; border-bottom: 1px solid var(--line); padding: 40px 6vw 44px; text-align: left;">
+    <div class="breadcrumbs" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; gap: 6px; font-weight: 500;">
+      <a href="../index.html" style="color: var(--maroon);">Home</a>
+      <span>&rsaquo;</span>
+      <span id="cart-breadcrumb-active">Your Cart</span>
+    </div>
+    <h1 id="cart-page-title" style="font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; color: var(--maroon); margin-bottom: 6px;">Your Sacred Selections</h1>
+    <p id="cart-page-subtitle" style="color: var(--muted); font-size: 1.05rem; max-width: 600px; line-height: 1.4; font-weight: 300;">You're one step closer to bringing positive energy and harmony into your life.</p>
+  </div>
+
+  <main class="cart-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 6vw 80px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px;">
+    <!-- Left Column (Items / Delivery Details) -->
     <div class="cart-left-col">
+      <!-- 1. Cart Items View -->
       <div id="cart-items-section" class="cart-section">
-        <h2 class="cart-section-title">Your Shopping Bag</h2>
-        <div id="cart-items-list"></div>
-        <div id="cart-items-actions" class="hidden">
-          <button class="btn btn-primary full" id="btn-show-checkout" onclick="showAddressSection()">Checkout</button>
+        <div id="cart-items-list" style="display: flex; flex-direction: column; gap: 20px;">
+          <p class="loading">Loading your sacred selections...</p>
+        </div>
+
+        <!-- Frequently Bought Together section -->
+        <div id="frequently-bought-section" class="hidden" style="margin-top: 50px; text-align: left;">
+          <h2 style="font-family:'Fraunces', serif; font-size:1.6rem; color:var(--maroon); margin-bottom:20px;">Frequently Bought Together</h2>
+          <div class="frequent-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:18px;">
+            <div class="frequent-card" style="background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; transition: transform 0.2s;">
+              <div style="font-size:2.6rem; margin-bottom:12px; background:var(--ivory); padding:16px; border-radius:10px;">⚜️</div>
+              <h4 style="font-family:'Fraunces', serif; font-size:1rem; color:var(--night); margin-bottom:4px; font-weight:600;">Kuber Yantra</h4>
+              <p style="color:var(--muted); font-size:0.8rem; margin-bottom:12px;">Financial growth</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--maroon); font-size:0.95rem;">₹1,999</strong>
+                <button class="btn btn-primary" style="padding:6px 12px; font-size:0.75rem;" onclick="addFrequentItem(101, 'Kuber Yantra', 199900, '⚜️')">+ Add</button>
+              </div>
+            </div>
+            <div class="frequent-card" style="background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; transition: transform 0.2s;">
+              <div style="font-size:2.6rem; margin-bottom:12px; background:var(--ivory); padding:16px; border-radius:10px;">📐</div>
+              <h4 style="font-family:'Fraunces', serif; font-size:1rem; color:var(--night); margin-bottom:4px; font-weight:600;">Prosperity Pyramid</h4>
+              <p style="color:var(--muted); font-size:0.8rem; margin-bottom:12px;">Abundance energy</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--maroon); font-size:0.95rem;">₹1,499</strong>
+                <button class="btn btn-primary" style="padding:6px 12px; font-size:0.75rem;" onclick="addFrequentItem(102, 'Prosperity Pyramid', 149900, '📐')">+ Add</button>
+              </div>
+            </div>
+            <div class="frequent-card" style="background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; transition: transform 0.2s;">
+              <div style="font-size:2.6rem; margin-bottom:12px; background:var(--ivory); padding:16px; border-radius:10px;">📿</div>
+              <h4 style="font-family:'Fraunces', serif; font-size:1rem; color:var(--night); margin-bottom:4px; font-weight:600;">Tiger Eye Bracelet</h4>
+              <p style="color:var(--muted); font-size:0.8rem; margin-bottom:12px;">Confidence & success</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--maroon); font-size:0.95rem;">₹899</strong>
+                <button class="btn btn-primary" style="padding:6px 12px; font-size:0.75rem;" onclick="addFrequentItem(103, 'Tiger Eye Bracelet', 89900, '📿')">+ Add</button>
+              </div>
+            </div>
+            <div class="frequent-card" style="background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px; text-align:center; transition: transform 0.2s;">
+              <div style="font-size:2.6rem; margin-bottom:12px; background:var(--ivory); padding:16px; border-radius:10px;">🔮</div>
+              <h4 style="font-family:'Fraunces', serif; font-size:1rem; color:var(--night); margin-bottom:4px; font-weight:600;">Selenite Crystal</h4>
+              <p style="color:var(--muted); font-size:0.8rem; margin-bottom:12px;">Clarity & cleansing</p>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--maroon); font-size:0.95rem;">₹1,199</strong>
+                <button class="btn btn-primary" style="padding:6px 12px; font-size:0.75rem;" onclick="addFrequentItem(104, 'Selenite Crystal', 119900, '🔮')">+ Add</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- 2. Shipping Address View (Delivery Details) -->
       <div id="address-section" class="cart-section hidden">
-        <h2 class="cart-section-title">Shipping Address</h2>
         <form id="address-form" onsubmit="proceedToPayment(event)">
-          <div class="form-group">
-            <label for="shipping-name">Full Name</label>
-            <input type="text" id="shipping-name" placeholder="John Doe" required />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="shipping-phone">Phone Number</label>
-              <input type="tel" id="shipping-phone" placeholder="9876543210" required />
+          <!-- Dynamic Saved Addresses Container injected by JS -->
+          <div id="saved-addresses-container" class="form-group-premium"></div>
+
+          <!-- Manual Form Fields block (Toggled by selector) -->
+          <div id="manual-address-form-fields">
+            <h3 style="font-family:'Fraunces', serif; font-size:1.35rem; color:var(--maroon); margin-bottom:16px;">Add Shipping Address</h3>
+            
+            <div class="form-group-premium">
+              <label for="shipping-name">Full Name</label>
+              <input type="text" id="shipping-name" placeholder="John Doe" required />
             </div>
-            <div class="form-group">
-              <label for="shipping-email">Email Address</label>
-              <input type="email" id="shipping-email" placeholder="you@example.com" required />
+            
+            <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group-premium">
+                <label for="shipping-phone">Phone Number</label>
+                <input type="tel" id="shipping-phone" placeholder="9876543210" required />
+              </div>
+              <div class="form-group-premium">
+                <label for="shipping-email">Email Address</label>
+                <input type="email" id="shipping-email" placeholder="you@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-group-premium">
+              <label for="shipping-address">Street Address</label>
+              <input type="text" id="shipping-address" placeholder="Flat/House no., Building, Street name" required />
+            </div>
+
+            <div class="form-row-premium" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group-premium">
+                <label for="shipping-city">City</label>
+                <input type="text" id="shipping-city" placeholder="Mumbai" required />
+              </div>
+              <div class="form-group-premium">
+                <label for="shipping-pincode">Pincode</label>
+                <input type="text" id="shipping-pincode" placeholder="400001" required />
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <label for="shipping-address">Street Address</label>
-            <input type="text" id="shipping-address" placeholder="Flat/House no., Building, Street name" required />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="shipping-city">City</label>
-              <input type="text" id="shipping-city" placeholder="Mumbai" required />
-            </div>
-            <div class="form-group">
-              <label for="shipping-pincode">Pincode</label>
-              <input type="text" id="shipping-pincode" placeholder="400001" required />
-            </div>
-          </div>
-          <div class="address-actions">
-            <button type="button" class="btn btn-outline" onclick="showCartSection()">Back to Bag</button>
-            <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+
+          <div class="address-actions" style="display: flex; gap: 14px; margin-top: 30px;">
+            <button type="button" class="btn btn-outline" style="flex: 1;" onclick="showCartSection()">Back to Bag</button>
+            <button type="submit" class="btn btn-primary" style="flex: 2;">Confirm Shipping Address</button>
           </div>
         </form>
       </div>
     </div>
 
+    <!-- Right Column (Checkout Stepper, Totals Breakdown, Trust icons) -->
     <div class="cart-right-col">
-      <div class="summary-card">
-        <h3>Order Summary</h3>
-        <div id="summary-items-list"></div>
-        <div class="summary-details">
-          <div class="summary-detail-row"><span>Subtotal</span><span id="summary-subtotal">₹0</span></div>
-          <div class="summary-detail-row"><span>Shipping</span><span id="summary-shipping">Free</span></div>
-          <div class="summary-detail-row total"><span>Total</span><strong id="summary-total">₹0</strong></div>
+      <!-- Steps Indicator (Figma layout) -->
+      <div class="checkout-steps-bar" style="display: flex; justify-content: space-between; margin-bottom: 24px; font-size: 0.8rem; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid var(--line); text-align: center;">
+        <div class="step-item active" id="step-1-badge" style="flex: 1;">
+          <span class="step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--maroon); color: #fff; font-weight: 700; margin-bottom: 4px; font-size: 0.76rem;">1</span>
+          <div style="font-weight: 600; color: var(--maroon);">Cart</div>
         </div>
-        <button id="btn-pay" class="btn btn-primary full hidden" onclick="payNow()">Pay with Razorpay</button>
+        <div class="step-item" id="step-2-badge" style="flex: 1;">
+          <span class="step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--line); color: var(--muted); font-weight: 700; margin-bottom: 4px; font-size: 0.76rem;">2</span>
+          <div style="color: var(--muted);">Shipping</div>
+        </div>
+        <div class="step-item" id="step-3-badge" style="flex: 1;">
+          <span class="step-num" style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--line); color: var(--muted); font-weight: 700; margin-bottom: 4px; font-size: 0.76rem;">3</span>
+          <div style="color: var(--muted);">Payment</div>
+        </div>
+      </div>
+
+      <!-- Order Summary Card -->
+      <div class="summary-card" style="background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:30px; box-shadow:var(--shadow);">
+        <h3 style="font-family:'Fraunces', serif; font-size:1.45rem; color:var(--maroon); margin-bottom:6px;">Order Summary</h3>
+        <span id="summary-items-count" style="display:block; color:var(--muted); font-size:0.88rem; margin-bottom:20px;">0 items</span>
+
+        <!-- Compact Items thumbnails list -->
+        <div id="summary-items-list" style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px; max-height:220px; overflow-y:auto; padding-right:4px;"></div>
+
+        <!-- Totals details list -->
+        <div class="summary-details" style="border-top:1px solid var(--line); padding-top:20px; font-size:0.92rem; display:flex; flex-direction:column; gap:12px; color:var(--ink);">
+          <div style="display:flex; justify-content:space-between;"><span>Subtotal</span><span id="summary-subtotal" style="font-weight:500;">₹0</span></div>
+          <div style="display:flex; justify-content:space-between;"><span>Temple Consecration</span><span style="font-weight:500;">₹99</span></div>
+          <div style="display:flex; justify-content:space-between;"><span>Shipping</span><span id="summary-shipping" style="font-weight:500; color:#2E7D32;">Free</span></div>
+          <div style="display:flex; justify-content:space-between;"><span>GST (5%)</span><span id="summary-gst" style="font-weight:500;">₹0</span></div>
+          <div style="color:var(--marigold-deep); font-weight:600; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:4px; margin: 4px 0;">
+            🏷️ <span>Apply coupon or promo code</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:16px; font-size:1.15rem; font-weight:700; color:var(--maroon);">
+            <span>Grand Total</span>
+            <strong id="summary-total">₹0</strong>
+          </div>
+        </div>
+
+        <!-- Call-to-action Checkout button controls -->
+        <div id="cart-items-actions" class="hidden" style="margin-top:26px;">
+          <button class="btn btn-primary full" id="btn-show-checkout" onclick="showAddressSection()" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+            🔒 Proceed to Checkout
+          </button>
+        </div>
+        <button id="btn-pay" class="btn btn-primary full hidden" onclick="payNow()" style="margin-top:26px; display:flex; align-items:center; justify-content:center; gap:8px; background:#2E7D32;">
+          💳 Complete Secure Payment
+        </button>
+
+        <a href="../index.html" class="btn btn-outline full" style="margin-top:12px; text-align:center; padding:12px 20px; font-size:0.88rem;">
+          &larr; Continue Shopping
+        </a>
+
+        <!-- Accepted cards badges -->
+        <div style="text-align:center; margin-top:20px; border-top:1px dashed var(--line); padding-top:16px;">
+          <span style="display:block; font-size:0.75rem; color:var(--muted); text-transform:uppercase; font-weight:600; letter-spacing:0.5px; margin-bottom:8px;">Accepted Payments</span>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:6px; font-size:0.7rem; font-weight:700; color:var(--muted);">
+            <span style="background:var(--ivory); padding:4px 8px; border-radius:4px; border:1px solid var(--line);">UPI</span>
+            <span style="background:var(--ivory); padding:4px 8px; border-radius:4px; border:1px solid var(--line);">CARDS</span>
+            <span style="background:var(--ivory); padding:4px 8px; border-radius:4px; border:1px solid var(--line);">NET BANKING</span>
+            <span style="background:var(--ivory); padding:4px 8px; border-radius:4px; border:1px solid var(--line);">COD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Assistance panel box -->
+      <div style="background:#FFF9F3; border:1px solid var(--line); border-radius:12px; margin-top:20px; padding:20px; display:flex; align-items:flex-start; gap:12px;">
+        <span style="font-size:1.8rem; line-height:1;">💬</span>
+        <div style="font-size:0.84rem; line-height:1.4; color:var(--ink);">
+          <strong style="display:block; color:var(--maroon); margin-bottom:2px; font-weight:600;">Need Assistance?</strong>
+          <span style="color:var(--muted);">Talk to our Spiritual Care Team for recommendations or order queries.</span>
+          <div style="display:flex; gap:10px; margin-top:10px;">
+            <a href="https://wa.me/919876543210" target="_blank" style="color:var(--maroon); font-weight:700; text-decoration:underline;">WhatsApp &rarr;</a>
+            <a href="#" style="color:var(--maroon); font-weight:700; text-decoration:underline;">Live Chat &rarr;</a>
+          </div>
+        </div>
       </div>
     </div>
   </main>
+
+  <!-- Complete Vedic Trust strip footer -->
+  <div style="background:#FFF; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:24px 6vw; display:flex; flex-wrap:wrap; justify-content:center; gap:20px 48px; font-size:0.82rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px;">
+    <span style="display:flex; align-items:center; gap:6px;">🛡️ 100% Authentic</span>
+    <span style="display:flex; align-items:center; gap:6px;">🔒 Secure Payments</span>
+    <span style="display:flex; align-items:center; gap:6px;">🚚 Fast Delivery</span>
+    <span style="display:flex; align-items:center; gap:6px;">🔥 Temple Energized</span>
+    <span style="display:flex; align-items:center; gap:6px;">⭐ Expert Endorsed</span>
+    <span style="display:flex; align-items:center; gap:6px;">🔄 Easy Returns</span>
+  </div>
+
+  <!-- Main Vedic footer -->
+  <footer class="footer" style="background:#1C080B; color:rgba(255,255,255,0.7); text-align:left; padding:60px 6vw 40px; margin-top:0;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:40px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:40px; margin-bottom:30px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:8px; margin-bottom:20px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; background:var(--marigold); color:#1C080B; font-weight:bold; font-size:1rem;">ॐ</span>
+          <span style="font-family:'Fraunces', serif; font-size:1.35rem; font-weight:700; color:#fff;">Aroham</span>
+        </div>
+        <p style="font-size:0.86rem; line-height:1.6; margin-bottom:20px; font-weight:300;">India's most trusted premium platform for authentic Vedic products, spiritually energized and expertly recommended.</p>
+        <span style="display:block; font-size:0.85rem; margin-bottom:8px;">📧 hello@aroham.in</span>
+        <span style="display:block; font-size:0.85rem; margin-bottom:8px;">📞 +91 98765 43210</span>
+        <span style="display:block; font-size:0.85rem;">📍 Bengaluru, India</span>
+      </div>
+      <div>
+        <h4 style="color:#fff; font-family:'Outfit', sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:20px; font-weight:600;">Company</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; font-weight:300;">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff; font-family:'Outfit', sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:20px; font-weight:600;">Collections</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; font-weight:300;">
+          <li><a href="#">Yantras</a></li>
+          <li><a href="#">Rudraksha</a></li>
+          <li><a href="#">Crystals</a></li>
+          <li><a href="#">Idols</a></li>
+          <li><a href="#">Combo Kits</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff; font-family:'Outfit', sans-serif; font-size:0.95rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:20px; font-weight:600;">Support</h4>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:0.85rem; font-weight:300;">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:0.82rem; font-weight:300;">
+      <span>&copy; 2026 Aroham · Made in India with devotion 🇮🇳</span>
+      <div style="display:flex; gap:16px;">
+        <a href="#" style="color:rgba(255,255,255,0.5);">Privacy Policy</a>
+        <a href="#" style="color:rgba(255,255,255,0.5);">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
 
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
