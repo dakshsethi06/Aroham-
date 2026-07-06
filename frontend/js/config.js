@@ -42,9 +42,20 @@ function saveCart(cart) {
   updateCartBadge();
 }
 
-function updateCartBadge() {
+async function updateCartBadge() {
   const el = document.getElementById("cart-count");
-  if (el) el.textContent = getCart().reduce((n, i) => n + i.qty, 0);
+  if (!el) return;
+  try {
+    const { data } = await db.auth.getSession();
+    if (data.session) {
+      const cart = await api("/cart?temp=false");
+      el.textContent = cart.reduce((n, i) => n + i.qty, 0);
+      return;
+    }
+  } catch (e) {
+    console.error("Failed to fetch database cart for badge", e);
+  }
+  el.textContent = getCart().reduce((n, i) => n + i.qty, 0);
 }
 
 function formatINR(paise) { return "₹" + (paise / 100).toLocaleString("en-IN"); }

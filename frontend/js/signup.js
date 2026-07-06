@@ -37,6 +37,15 @@ async function handleDoneSubmit(e) {
   const tob = document.getElementById("tob").value || null;
   const address = document.getElementById("address").value.trim() || null;
   const pobVal = document.getElementById("pob").value.trim();
+
+  // Client-side Validation Checks (Bug 3)
+  if (!fullName) return showToast("Full Name is required");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showToast("Please enter a valid email address");
+  if (!phone || !/^\d{10}$/.test(phone)) return showToast("Please enter a valid 10-digit phone number");
+  if (!password || password.length < 6) return showToast("Password must be at least 6 characters");
+  if (!gender) return showToast("Gender is required");
+  if (!dob) return showToast("Date of Birth is required");
+
   let pobCity = null, pobState = null, pobCountry = null;
   if (pobVal) {
     const parts = pobVal.split(",").map(s => s.trim());
@@ -52,7 +61,7 @@ async function handleDoneSubmit(e) {
         method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
       });
       const body = await res.json();
-      if (res.ok) { signupSuccess = true; showToast("Account created successfully! 🎉"); }
+      if (res.ok) { signupSuccess = true; }
       else { console.warn("Backend failed, falling back:", body.error); }
     } catch (err) { console.warn("Backend offline/error, falling back:", err.message); }
 
@@ -66,8 +75,19 @@ async function handleDoneSubmit(e) {
         id: data.user.id, full_name: fullName, phone, email, gender, dob, tob, pob_city: pobCity, pob_state: pobState, pob_country: pobCountry, address
       });
       if (profErr) { showToast("Account created, but database users table was missing."); }
-      else { showToast("Account created successfully! 🎉"); }
     }
-    setTimeout(() => { window.location.href = "login.html"; }, 2000);
+
+    showToast("Account created successfully! 🎉");
+
+    // Auto-login (Bug 4)
+    showToast("Logging in...");
+    const { error: loginErr } = await db.auth.signInWithPassword({ email, password });
+    if (loginErr) {
+      showToast("Account created! Please log in.");
+      setTimeout(() => { window.location.href = "login.html"; }, 1500);
+    } else {
+      showToast("Welcome to Aroham! 🎉");
+      setTimeout(() => { window.location.href = "../index.html"; }, 1200);
+    }
   } catch (err) { showToast(err.message); }
 }

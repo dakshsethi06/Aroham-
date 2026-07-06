@@ -87,3 +87,9 @@ async function reportFailure(orderId, reason) {
   try { await api("/payments/failed", { method: "POST", body: JSON.stringify({ orderId, reason }) }); } catch {}
   showToast("Payment not completed. Stock released.");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.isBuyNow) {
+    setTimeout(showAddressSection, 150);
+  }
+});

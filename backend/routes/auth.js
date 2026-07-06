@@ -1,6 +1,25 @@
 const router = require("express").Router();
 const supabase = require("../config/supabase");
 
+// GET /api/auth/email-by-phone - Lookup email associated with a phone number
+router.get("/email-by-phone", async (req, res) => {
+  const { phone } = req.query;
+  if (!phone) return res.status(400).json({ error: "Phone number is required" });
+  try {
+    const { data, error } = await supabase
+      .from("users")
+      .select("email")
+      .eq("phone", phone.trim())
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!data) return res.status(404).json({ error: "No account found with this phone number" });
+    res.json({ email: data.email });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // POST /api/auth/signup - Email & password signup
 router.post("/signup", async (req, res) => {
   const {
