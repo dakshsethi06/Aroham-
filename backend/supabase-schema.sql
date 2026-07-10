@@ -17,6 +17,9 @@ create table if not exists orders (
   amount bigint not null,
   status text default 'PENDING',        -- PENDING | CONFIRMED | PAYMENT_FAILED
   address jsonb,
+  shipment_id bigint,                   -- Shiprocket shipment ID
+  awb_code text,                        -- Shiprocket Air Waybill code
+  label_url text,                       -- Shiprocket printable label URL
   created_at timestamptz default now()
 );
 
