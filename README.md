@@ -17,6 +17,7 @@ aroham-full/
 │   ├── middleware/auth.js      # Verifies Supabase JWT
 │   ├── routes/                 # products, cart, orders, payments
 │   └── services/               # validation, order, payment services
+│       └── shiprocket/         # Shiprocket fulfillment API module
 └── frontend/                   # Static site (open with a local server)
     ├── index.html
     ├── css/  js/  pages/
@@ -27,6 +28,7 @@ aroham-full/
    Enable Email auth (turn off "Confirm email" for testing).
 2. Backend:
    cd backend && cp .env.example .env   (fill keys) && npm install && npm start
+   **Shiprocket:** Ensure you add `SHIPROCKET_EMAIL` and `SHIPROCKET_PASSWORD` to `.env`.
    → http://localhost:5000/api/health
 3. Frontend: put SUPABASE_URL + anon key in frontend/js/config.js, then:
    cd frontend && npx serve .   → http://localhost:3000
@@ -40,7 +42,7 @@ Card 4111 1111 1111 1111 (any expiry/CVV) or UPI success@razorpay.
 ## Flow mapping to the diagram
 - POST /api/cart/validate  → Product Validation (stock/price check)
 - POST /api/orders         → Order PENDING + items + reserve_stock() + payment INITIATED + Razorpay order
-- POST /api/payments/verify→ Redirect path: HMAC signature check → CONFIRMED + commit_stock()
+- POST /api/payments/verify→ Redirect path: HMAC signature check → CONFIRMED + commit_stock() + **Shiprocket dispatch**
 - POST /api/payments/failed→ FAILED path: PAYMENT_FAILED + release_stock()
 - POST /api/payments/webhook→ Webhook path (source of truth, idempotent)
-- GET  /api/orders         → Order History (orders + items + payments)
+- GET  /api/orders         → Order History (orders + items + payments + AWB tracking)
