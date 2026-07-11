@@ -142,6 +142,18 @@ class ShiprocketService {
       };
     }
   }
+
+  /**
+   * Cancel a Shiprocket order by its order ID(s)
+   * @param {string[]} orderIds - Array of Shiprocket order IDs to cancel
+   * @returns {Object} cancellation response
+   */
+  async cancelOrder(orderIds) {
+    if (!orderIds || !orderIds.length) throw new Error("orderIds required to cancel");
+    const data = await this.api.request('/orders/cancel', 'POST', { ids: orderIds });
+    console.log(`[ShiprocketService] Order(s) cancelled: ${orderIds.join(', ')}`);
+    return data;
+  }
 }
 
 module.exports = ShiprocketService;

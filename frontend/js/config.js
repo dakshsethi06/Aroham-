@@ -2,7 +2,7 @@
 // Supabase anon key is safe for frontend. Razorpay key comes from backend.
 const SUPABASE_URL = "https://lzzdfsphevmzbkkoskxb.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_hXI5tCwU5jA3BQtdLxuXoQ_L69CcRaZ";
-const API_BASE = "https://aroham.onrender.com/api";   // backend URL
+const API_BASE = "http://localhost:5001/api";   // backend URL
 // ==========================================================
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
