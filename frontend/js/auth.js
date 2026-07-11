@@ -22,6 +22,7 @@ async function updateAuthLink() {
   
   const profileLink = document.getElementById("profile-nav-link");
   const ordersLink = document.getElementById("orders-nav-link");
+  const adminLink = document.getElementById("admin-nav-link");
 
   if (user) {
     link.textContent = "Logout";
@@ -39,6 +40,14 @@ async function updateAuthLink() {
     
     if (profileLink) profileLink.classList.remove("hidden");
     if (ordersLink) ordersLink.classList.remove("hidden");
+    // Only show Admin link if backend confirms this email is whitelisted
+    if (adminLink) {
+      try {
+        const session = (await db.auth.getSession()).data.session;
+        const r = await fetch(API_BASE + "/admin/check", { headers: { Authorization: "Bearer " + session.access_token } });
+        if (r.ok) adminLink.classList.remove("hidden");
+      } catch (_) { /* not admin, stay hidden */ }
+    }
   } else {
     link.textContent = "Login";
     link.href = ROOT + "pages/login.html";
@@ -46,6 +55,7 @@ async function updateAuthLink() {
     
     if (profileLink) profileLink.classList.add("hidden");
     if (ordersLink) ordersLink.classList.add("hidden");
+    if (adminLink) adminLink.classList.add("hidden");
   }
 }
 
