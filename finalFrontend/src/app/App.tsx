@@ -115,7 +115,7 @@ const AROHAM_PRODUCTS: ArohamProduct[] = [
 
 const COMBOS = [
   {
-    name: "Navagraha Complete Kit",
+    id: 7, name: "Navagraha Complete Kit",
     desc: "Align all 9 planetary energies for total life transformation",
     items: ["Navratna Gemstone Set", "Navratna Sri Yantra Pendant", "Bagla Mukhi Yantra"],
     price: 6999, original: 11497, saving: 4498,
@@ -123,7 +123,7 @@ const COMBOS = [
     accent: GOLD,
   },
   {
-    name: "Wealth Attraction Kit",
+    id: 8, name: "Wealth Attraction Kit",
     desc: "Triple-layer wealth activation for financial breakthroughs",
     items: ["Navratna Sri Yantra Pendant", "Brass Pyramid Yantra", "Bagla Mukhi Yantra"],
     price: 5499, original: 7997, saving: 2498,
@@ -131,7 +131,7 @@ const COMBOS = [
     accent: "#4ADE80",
   },
   {
-    name: "Home Protection Bundle",
+    id: 9, name: "Home Protection Bundle",
     desc: "Complete Vastu correction & divine protection for your home",
     items: ["Brass Pyramid Yantra", "Navdurga Yantra Plate", "Kavacha Pendant"],
     price: 5999, original: 8697, saving: 2698,
@@ -3874,7 +3874,7 @@ export default function App() {
             <ProductsAndCombos
               onProductClick={goToProduct}
               onAddToCart={(p) => addToCart(p)}
-              onAddCombo={(name) => { const combo = COMBOS.find(c => c.name === name); if (combo) { addToCart({ ...AROHAM_PRODUCTS[0], name: combo.name, price: combo.price, original: combo.original }, 1); } }}
+              onAddCombo={(name) => { const combo = COMBOS.find(c => c.name === name); if (combo) { addToCart({ ...AROHAM_PRODUCTS[0], id: combo.id, name: combo.name, price: combo.price, original: combo.original }, 1); } }}
             />
             <WhyAroham />
             <VideoTestimonials />
