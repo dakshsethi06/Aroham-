@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aroham — Astrologer Vedic Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <style>
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      max-width: 1400px;
+      margin: 30px auto 60px;
+      padding: 0 3vw;
+      height: calc(100vh - 180px);
+      min-height: 700px;
+    }
+    .left-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+      overflow-y: auto;
+    }
+    .panel-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .astro-profile-card {
+      text-align: center;
+      position: relative;
+    }
+    .astro-profile-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--maroon);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-family: 'Fraunces', serif;
+      border: 3px solid var(--gold);
+      margin: 0 auto 12px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat-box {
+      background: var(--ivory);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--maroon);
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+    .requests-list-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .workspace-panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Three Column Active Chat Layout */
+    .active-chat-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px 240px;
+      height: 100%;
+      width: 100%;
+    }
+    .chat-col {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      height: 100%;
+    }
+    .kundli-col {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      padding: 20px;
+      overflow-y: auto;
+      background: #FAF7F5;
+      height: 100%;
+    }
+    .recommend-col {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      overflow-y: auto;
+      background: #fff;
+      height: 100%;
+    }
+    .request-card {
+      border: 1.5px solid var(--marigold);
+      border-radius: 12px;
+      padding: 16px;
+      background: #FAF7F5;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: alertGlow 1.5s infinite alternate;
+      margin-top: 10px;
+    }
+    @keyframes alertGlow {
+      from { box-shadow: 0 0 4px rgba(212, 155, 44, 0.2); }
+      to { box-shadow: 0 0 16px rgba(212, 155, 44, 0.5); }
+    }
+    .request-header {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--maroon);
+    }
+    .request-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .action-row {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-action {
+      flex: 1;
+      padding: 9px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.16s ease;
+    }
+    .btn-accept {
+      background: var(--maroon);
+      color: #fff;
+    }
+    .btn-accept:hover {
+      background: var(--night-2);
+    }
+    .btn-decline {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+    .btn-decline:hover {
+      background: #f5f5f5;
+    }
+    .chat-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--ivory);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #FAF7F5;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+      display: flex;
+      gap: 10px;
+    }
+    .chat-input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-family: inherit;
+      outline: none;
+      font-size: 0.92rem;
+    }
+    .chat-input:focus {
+      border-color: var(--marigold);
+    }
+    .message-bubble {
+      max-width: 80%;
+      padding: 10px 16px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .message-bubble.incoming {
+      background: #fff;
+      color: var(--ink);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      border: 1px solid var(--line);
+    }
+    .message-bubble.outgoing {
+      background: var(--maroon);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    /* Recommended Product Cards inside chat */
+    .chat-product-card {
+      background: #fff;
+      border: 1px solid var(--gold);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 8px 0;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      text-align: left;
+      box-shadow: var(--shadow);
+    }
+    .chat-product-emoji {
+      font-size: 1.8rem;
+      background: var(--ivory);
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-product-info {
+      flex: 1;
+    }
+    .chat-product-name {
+      font-weight: 600;
+      color: var(--maroon);
+      font-size: 0.88rem;
+    }
+    .chat-product-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .chat-product-btn {
+      background: var(--marigold);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* Traditional diamond chart grid */
+    .kundli-chart-wrapper {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border: 2px solid var(--maroon);
+      margin: 16px auto;
+      background: #fff;
+    }
+    .kundli-diagonal-1 {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom right, transparent calc(50% - 1px), var(--maroon) 50%, transparent calc(50% + 1.5px));
+    }
+    .kundli-diagonal-2 {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom left, transparent calc(50% - 1px), var(--maroon) 50%, transparent calc(50% + 1.5px));
+    }
+    .kundli-diamond {
+      position: absolute;
+      top: 25%; left: 25%; width: 50%; height: 50%;
+      border: 1.5px solid var(--maroon);
+      transform: rotate(45deg);
+    }
+    .kundli-house-label {
+      position: absolute;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--maroon);
+      opacity: 0.8;
+    }
+    .h1-label { top: 40%; left: 47%; }
+    .h2-label { top: 15%; left: 30%; }
+    .h3-label { top: 15%; left: 63%; }
+    .h4-label { top: 40%; left: 80%; }
+    .h5-label { top: 65%; left: 63%; }
+    .h6-label { top: 65%; left: 30%; }
+    .h7-label { top: 50%; left: 47%; }
+    .h8-label { top: 75%; left: 47%; }
+    .h9-label { top: 50%; left: 15%; }
+    .h10-label { top: 15%; left: 47%; }
+    .h11-label { top: 50%; left: 80%; }
+    .h12-label { top: 75%; left: 80%; }
+    
+    .kundli-title {
+      font-family: 'Fraunces', serif;
+      color: var(--maroon);
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      text-transform: capitalize;
+    }
+    .recommend-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--ivory);
+      transition: border-color 0.16s ease;
+    }
+    .recommend-item:hover {
+      border-color: var(--marigold);
+    }
+    .recommend-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .recommend-action-btn {
+      width: 100%;
+      background: var(--maroon);
+      color: #fff;
+      border: none;
+      padding: 6px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .recommend-action-btn:hover {
+      background: var(--night-2);
+    }
+    .placeholder-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: #4caf50;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px #4caf50;
+      animation: pulseGlow 1.5s infinite alternate;
+    }
+    .pulse-dot.offline {
+      background: var(--muted);
+      box-shadow: none;
+      animation: none;
+    }
+    @keyframes pulseGlow {
+      from { transform: scale(0.9); opacity: 0.7; }
+      to { transform: scale(1.1); opacity: 1; }
+    }
+  </style>
+</head>
+<body style="background: #FDFBFA;">
+  <!-- Light Header Navbar -->
+  <header class="navbar">
+    <a href="../index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
+      <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
+      <span class="logo-text" style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: var(--maroon); letter-spacing: -0.5px;">Aroham</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html">Collections</a>
+      <a href="../index.html#products">Shop by Problem</a>
+      <a href="../index.html#products">Yantras</a>
+      <a href="../index.html#products">Combos</a>
+      <a href="../index.html#products">About</a>
+      <a href="profile.html" id="profile-nav-link" class="hidden">Profile</a>
+      <a href="orders.html" id="orders-nav-link" class="hidden">Orders</a>
+      <a href="chat.html" id="chat-nav-link" class="hidden">Consult Astrologer</a>
+      <a href="astrologer-dashboard.html" id="astrologer-nav-link" class="active">Astrologer Dashboard</a>
+      <a href="admin.html" id="admin-nav-link" class="hidden">Admin</a>
+    </nav>
+    <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
+      <a href="login.html" id="auth-link" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.88rem; margin-left: 10px;">Sign In</a>
+    </div>
+  </header>
+
+  <!-- Banner Header -->
+  <div style="background: #FDFBFAF2; border-bottom: 1px solid var(--line); padding: 40px 6vw 44px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div class="breadcrumbs" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; display: flex; gap: 6px; font-weight: 500;">
+        <a href="../index.html" style="color: var(--maroon);">Home</a>
+        <span>&rsaquo;</span>
+        <span style="color: var(--ink);">Astrologer Vedic Portal</span>
+      </div>
+      <h1 style="font-family: 'Fraunces', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; color: var(--maroon); margin-bottom: 6px;">Vedic Expert Portal</h1>
+      <p style="color: var(--muted); font-size: 1.05rem; max-width: 600px; line-height: 1.4; font-weight: 300;">An absolute sacred workstation to inspect birth charts, consult clients, and prescribe energized remedies.</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; background: #fff; padding: 10px 20px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow);">
+      <span id="status-pulse-dot" class="pulse-dot"></span>
+      <select id="status-toggle" onchange="toggleOnlineStatus()" style="border: none; background: transparent; font-family: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer; outline: none; color: var(--ink);">
+        <option value="online">Online & Available</option>
+        <option value="offline">Go Offline</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Dashboard Panel Grid -->
+  <div class="dashboard-container">
+    
+    <!-- Sidebar -->
+    <div class="left-sidebar">
+      
+      <!-- Profile & Summary panel -->
+      <div class="panel-card astro-profile-card">
+        <div id="astro-profile-avatar" class="astro-profile-avatar">ॐ</div>
+        <h3 id="astro-profile-name" style="font-family: 'Fraunces', serif; color: var(--maroon); font-size: 1.3rem;">Vedic Expert</h3>
+        <p style="font-size: 0.85rem; color: var(--muted); margin-top: 2px;">Premium Certified Astrologer</p>
+        
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-val">4.9 ★</div>
+            <div class="stat-label">Rating</div>
+          </div>
+          <div class="stat-box">
+            <div id="stat-consultations-count" class="stat-val">8</div>
+            <div class="stat-label">Sessions Today</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Incoming requests list -->
+      <div class="panel-card requests-list-container">
+        <h3 style="font-family: 'Outfit', sans-serif; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 1px; margin-bottom: 5px; border-bottom: 1px solid var(--line); padding-bottom: 8px;">Incoming Requests</h3>
+        <div id="incoming-requests-list" style="display: flex; flex-direction: column; gap: 14px; flex: 1;">
+          <p class="loading" style="padding: 20px 0; font-size: 0.85rem;">No active requests. Waiting for customers…</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right workspace panel (chat) -->
+    <div id="chat-workspace" class="workspace-panel">
+      <div id="placeholder-state" class="placeholder-state">
+        <div style="font-size: 4rem; margin-bottom: 16px; animation: float 3s ease-in-out infinite;">🔮</div>
+        <h3 style="color: var(--maroon); font-size: 1.5rem; margin-bottom: 8px;">Sacred Workspace Idle</h3>
+        <p style="max-width: 340px; font-size: 0.95rem; line-height: 1.5; color: var(--muted);">Waiting for client requests. Once accepted, the birth chart details, live chat, and remedy recommendation toolbox will open here.</p>
+      </div>
+
+      <!-- Active Chat Room Container (Three Column Layout) -->
+      <div id="chat-room" class="hidden active-chat-layout">
+        
+        <!-- Column 1: Live Chat Console -->
+        <div class="chat-col">
+          <div class="chat-header">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.2rem;">💬</span>
+              <strong id="chat-user-name" style="font-size: 1rem; color: var(--ink);">Client</strong>
+            </div>
+            <button class="btn btn-outline" style="padding: 6px 14px; font-size: 0.78rem; border-color: #d32f2f; color: #d32f2f;" onclick="endChatSession()">End Chat</button>
+          </div>
+
+          <div id="chat-messages" class="chat-body">
+            <!-- Messages append here -->
+          </div>
+
+          <form id="chat-form" class="chat-footer" onsubmit="sendLiveMessage(event)">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Type advice or recommendation..." required />
+            <button type="submit" class="btn btn-primary" style="padding: 10px 22px; border-radius: 999px; font-size: 0.88rem;">Send</button>
+          </form>
+        </div>
+
+        <!-- Column 2: Kundli / Birth Details Panel -->
+        <div class="kundli-col">
+          <div class="kundli-title">Birth Chart (Kundli)</div>
+          
+          <!-- Dynamic Kundli Details -->
+          <div id="chat-user-details" style="font-size: 0.82rem; color: var(--ink); line-height: 1.6; background: #fff; padding: 12px; border-radius: 10px; border: 1px solid var(--line);">
+            Loading details...
+          </div>
+
+          <!-- CSS rendered Diamond Chart Grid -->
+          <div class="kundli-chart-wrapper">
+            <div class="kundli-diagonal-1"></div>
+            <div class="kundli-diagonal-2"></div>
+            <div class="kundli-diamond"></div>
+            <!-- Traditional houses labels -->
+            <div class="kundli-house-label h1-label">I</div>
+            <div class="kundli-house-label h2-label">II</div>
+            <div class="kundli-house-label h3-label">III</div>
+            <div class="kundli-house-label h4-label">IV</div>
+            <div class="kundli-house-label h5-label">V</div>
+            <div class="kundli-house-label h6-label">VI</div>
+            <div class="kundli-house-label h7-label">VII</div>
+            <div class="kundli-house-label h8-label">VIII</div>
+            <div class="kundli-house-label h9-label">IX</div>
+            <div class="kundli-house-label h10-label">X</div>
+            <div class="kundli-house-label h11-label">XI</div>
+            <div class="kundli-house-label h12-label">XII</div>
+          </div>
+
+          <div class="kundli-title" style="margin-top: 14px;">Consultation Notes</div>
+          <textarea id="astro-consultation-notes" placeholder="Write private readings notes here... (saved automatically)" style="flex: 1; min-height: 100px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; font-family: inherit; font-size: 0.85rem; outline: none; resize: none; background: #fff;" oninput="saveScratchNotes()"></textarea>
+        </div>
+
+        <!-- Column 3: Aroham Remedy Recommender Toolkit -->
+        <div class="recommend-col">
+          <h4 style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 12px;">Vedic Remedies</h4>
+          <div id="remedies-list" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Recommended items populate here -->
+            <div class="recommend-item">
+              <span style="font-size: 1.4rem;">📿</span>
+              <span class="recommend-name">5 Mukhi Rudraksha</span>
+              <button class="recommend-action-btn" onclick="recommendProduct('5 Mukhi Rudraksha', '📿', 'Nepali bead for peace & health')">Recommend</button>
+            </div>
+            <div class="recommend-item">
+              <span style="font-size: 1.4rem;">🔱</span>
+              <span class="recommend-name">Shree Yantra</span>
+              <button class="recommend-action-btn" onclick="recommendProduct('Shree Yantra', '🔱', 'Brass, energised for prosperity')">Recommend</button>
+            </div>
+            <div class="recommend-item">
+              <span style="font-size: 1.4rem;">🫧</span>
+              <span class="recommend-name">Natural Moti</span>
+              <button class="recommend-action-btn" onclick="recommendProduct('Natural Pearl (Moti)', '🫧', 'Certified, for Moon strength')">Recommend</button>
+            </div>
+            <div class="recommend-item">
+              <span style="font-size: 1.4rem;">💛</span>
+              <span class="recommend-name">Yellow Sapphire</span>
+              <button class="recommend-action-btn" onclick="recommendProduct('Yellow Sapphire', '💛', 'Pukhraj for Jupiter blessings')">Recommend</button>
+            </div>
+            <div class="recommend-item">
+              <span style="font-size: 1.4rem;">🧿</span>
+              <span class="recommend-name">Gemstone Bracelet</span>
+              <button class="recommend-action-btn" onclick="recommendProduct('Gemstone Bracelet', '🧿', '7-chakra healing bracelet')">Recommend</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Audio element -->
+  <audio id="ringtone" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav" preload="auto" loop></audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/astrologer.js"></script>
+</body>
+</html>

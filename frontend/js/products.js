@@ -63,8 +63,12 @@ async function addToCart(p) {
   }
 }
 async function buyNow(p) {
-  const user = await requireLogin();
-  if (!user) return;
+  const user = await getUser();
+  if (!user) {
+    localStorage.setItem("aroham_buy_now_intent", JSON.stringify({ productId: p.id, qty: 1 }));
+  }
+  const loggedInUser = await requireLogin();
+  if (!loggedInUser) return;
   try {
     showToast("Starting quick checkout...");
     await api("/cart/buy-now", { method: "POST", body: JSON.stringify({ productId: p.id, qty: 1 }) });

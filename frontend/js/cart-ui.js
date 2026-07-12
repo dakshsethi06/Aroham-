@@ -192,6 +192,10 @@ async function renderCart() {
   document.getElementById("summary-total").textContent = formatINR(subtotal + gst + templeFee + shipping);
   
   actionsBlock.classList.remove("hidden");
+  
+  if (window.isBuyNow && !window.checkoutAddress && typeof showAddressSection === "function") {
+    showAddressSection();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", renderCart);

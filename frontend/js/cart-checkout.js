@@ -36,9 +36,11 @@ async function showAddressSection() {
         document.getElementById("manual-address-form-fields").classList.remove("hidden");
       } else {
         container.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-            <label style="font-weight: 600; font-size: 0.95rem; color: var(--maroon); margin: 0;">Saved Addresses</label>
-            <button type="button" class="btn btn-outline" style="padding: 6px 12px; font-size: 0.78rem;" onclick="addNewAddressTrigger()">+ New Address</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+            <label style="font-weight: 650; font-size: 1.05rem; color: var(--maroon); margin: 0; font-family:'Fraunces', serif;">Select Delivery Address</label>
+            <button type="button" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; border-radius: 30px; font-weight: 600;" onclick="addNewAddressTrigger()">
+              <span>➕</span> Add New Address
+            </button>
           </div>
           <div class="saved-addresses-grid" style="display:grid; gap:12px; margin-bottom:20px;">
             ${saved.map((a, idx) => {
@@ -49,8 +51,8 @@ async function showAddressSection() {
                   <input type="radio" name="selected-address" ${isDefault ? 'checked' : ''} style="margin-top: 4px; accent-color: var(--maroon);" />
                   <div style="flex: 1; font-size: 0.88rem; line-height: 1.5; color: var(--ink);">
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                      <strong style="font-weight:600; color:var(--night);">${idx === 0 ? 'Home' : idx === 1 ? 'Office' : 'Other'}</strong>
-                      ${isDefault ? '<span style="background:var(--ivory); color:var(--marigold-deep); font-size:0.7rem; font-weight:700; padding:1px 6px; border-radius:4px; text-transform:uppercase;">Default</span>' : ''}
+                      <strong style="font-weight:600; color:var(--night);">${isDefault ? 'Default Address' : 'Saved Address'}</strong>
+                      ${isDefault ? '<span style="background:var(--ivory); color:var(--marigold-deep); font-size:0.68rem; font-weight:700; padding:1px 6px; border-radius:4px; text-transform:uppercase;">Primary</span>' : ''}
                     </div>
                     <div style="font-weight: 600; color: var(--night); margin-bottom: 2px;">${a.name} | ${a.phone}</div>
                     <div style="color: var(--muted);">${a.address}, ${a.city} - ${a.pincode}</div>
@@ -255,8 +257,3 @@ async function reportFailure(orderId, reason) {
   showToast("Payment not completed. Stock released.");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.isBuyNow) {
-    setTimeout(showAddressSection, 150);
-  }
-});

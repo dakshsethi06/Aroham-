@@ -7,9 +7,106 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,450;0,550;0,650;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/pages.css" />
+  <style>
+    .astro-panel-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 2px solid var(--gold);
+      background: linear-gradient(135deg, #FAF7F5 0%, #FFF8EE 100%);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.18s ease;
+      margin-bottom: 12px;
+    }
+    .astro-panel-btn:hover {
+      background: linear-gradient(135deg, #FFF4DF 0%, #FFE9BF 100%);
+      border-color: var(--marigold);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(212, 155, 44, 0.18);
+    }
+    .astro-panel-btn .btn-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .astro-panel-btn .btn-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--maroon);
+      display: block;
+    }
+    .astro-panel-btn .btn-sub {
+      font-size: 0.76rem;
+      color: var(--muted);
+      display: block;
+      margin-top: 1px;
+      font-weight: 400;
+    }
+    .astro-section-divider {
+      text-align: center;
+      position: relative;
+      margin: 20px 0;
+    }
+    .astro-section-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: 1px;
+      background: var(--line);
+    }
+    .astro-section-divider span {
+      position: relative;
+      background: #fff;
+      padding: 0 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* Astrologer Signup Panel */
+    #astro-signup-view {
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.84rem;
+      color: var(--muted);
+      cursor: pointer;
+      margin-bottom: 18px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+    .back-link:hover { color: var(--maroon); }
+    .astro-badge-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #FAF0E6, #FFF3D0);
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--maroon);
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Light Header Navbar (Matches Figma) -->
+  <!-- Light Header Navbar -->
   <header class="navbar">
     <a href="../index.html" class="logo-wrap" style="display: flex; align-items: center; gap: 10px;">
       <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--maroon); color: #fff; font-size: 1.1rem; font-weight: bold;">ॐ</span>
@@ -24,8 +121,6 @@
       <a href="../index.html#products">Blog</a>
     </nav>
     <div class="nav-actions" style="display: flex; align-items: center; gap: 20px;">
-      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">🔍</span>
-      <span style="font-size: 1.1rem; cursor: pointer; color: var(--ink);">❤️</span>
       <a href="cart.html" style="position: relative; display: flex; align-items: center; gap: 4px;">
         <span style="font-size: 1.15rem;">🛒</span>
         <span id="cart-count" class="cart-badge" style="position: absolute; top: -8px; right: -12px;">0</span>
@@ -34,19 +129,18 @@
     </div>
   </header>
 
-  <!-- Split Auth Screen (Figma template) -->
+  <!-- Split Auth Screen -->
   <div class="auth-container">
-    <!-- Left Column (Maroon gradient sidebar) -->
-    <div class="auth-sidebar">
+    <!-- Left Sidebar -->
+    <div class="auth-sidebar" id="auth-sidebar">
       <div class="sidebar-top-brand">
         <span class="logo-badge" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: #FAF7F5; color: var(--maroon); font-size: 1.1rem; font-weight: bold;">ॐ</span>
         <span style="font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; color: #FAF7F5; letter-spacing: -0.5px;">Aroham</span>
       </div>
 
-      <div class="sidebar-main-content">
+      <div class="sidebar-main-content" id="sidebar-user-content">
         <h1>Welcome Back.</h1>
         <p class="sidebar-sub">Continue your journey toward harmony, prosperity and positive energy.</p>
-
         <ul class="sidebar-bullets">
           <li>✓ Access Orders</li>
           <li>✓ Astrology Reports</li>
@@ -56,7 +150,19 @@
         </ul>
       </div>
 
-      <!-- Testimonial card at bottom -->
+      <div class="sidebar-main-content hidden" id="sidebar-astro-content">
+        <h1>Expert Portal.</h1>
+        <p class="sidebar-sub">Join Aroham's certified astrologer network and connect with thousands of seekers.</p>
+        <ul class="sidebar-bullets">
+          <li>🔮 Live Consultation Requests</li>
+          <li>📿 Recommend Sacred Products</li>
+          <li>🕉️ Kundli & Birth Chart Tools</li>
+          <li>💬 Real-time Client Chat</li>
+          <li>⭐ Build Your Reputation</li>
+        </ul>
+      </div>
+
+      <!-- Testimonial -->
       <div class="sidebar-testimonial">
         <div class="stars">★★★★★</div>
         <p class="testimonial-quote">"Aroham has become my trusted destination for authentic Vedic guidance. The products are genuinely energized and beautifully crafted."</p>
@@ -70,146 +176,360 @@
       </div>
     </div>
 
-    <!-- Right Column (Auth Forms Card) -->
+    <!-- Right Column -->
     <div class="auth-content">
       <div class="auth-card-premium">
-        <!-- Tab selector headers -->
-        <div class="auth-tabs">
-          <button type="button" id="tab-signin" class="auth-tab-btn active" onclick="switchAuthTab('signin')">Sign In</button>
-          <button type="button" id="tab-signup" class="auth-tab-btn" onclick="switchAuthTab('signup')">Create Account</button>
-        </div>
 
-        <!-- 1. SIGN IN FORM -->
-        <div id="signin-view" class="auth-view-content">
-          <h2>Welcome Back</h2>
-          <p class="auth-view-sub">Continue your journey toward harmony and positive energy.</p>
-          
-          <form id="signin-form" onsubmit="handleLogin(event)">
-            <div class="form-group-premium">
-              <label for="email">Email or Phone Number</label>
-              <input type="text" id="email" placeholder="you@example.com or 9876543210" required />
-            </div>
+        <!-- ===================== VIEW: MAIN (User Login) ===================== -->
+        <div id="main-view">
+          <!-- Tab Headers -->
+          <div class="auth-tabs">
+            <button type="button" id="tab-signin" class="auth-tab-btn active" onclick="switchAuthTab('signin')">Sign In</button>
+            <button type="button" id="tab-signup" class="auth-tab-btn" onclick="switchAuthTab('signup')">Create Account</button>
+          </div>
 
-            <div class="form-group-premium relative">
-              <label for="password">Password</label>
-              <div class="password-wrapper">
-                <input type="password" id="password" placeholder="••••••••" required />
-                <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('password', this)">Show</button>
-              </div>
-            </div>
-
-            <div class="form-row-premium">
-              <label class="checkbox-label">
-                <input type="checkbox" id="remember-me" />
-                <span>Remember me</span>
-              </label>
-              <a href="#" class="forgot-link">Forgot Password?</a>
-            </div>
-
-            <button type="submit" class="btn btn-primary full">Sign In</button>
-          </form>
-          
-          <div class="or-separator">OR</div>
-          <button type="button" class="btn btn-outline full" onclick="switchAuthTab('signup')">Create a new account</button>
-        </div>
-
-        <!-- 2. CREATE ACCOUNT FORM (2-Step Flow) -->
-        <div id="signup-view" class="auth-view-content hidden">
-          
-          <!-- Step 1: Basic Credentials -->
-          <div id="signup-step-1">
-            <h2>Begin Your Spiritual Journey</h2>
-            <p class="auth-view-sub">Create your secure Aroham account.</p>
-
-            <form id="signup-form-1" onsubmit="advanceToStep2(event)">
+          <!-- 1. SIGN IN FORM -->
+          <div id="signin-view" class="auth-view-content">
+            <h2>Welcome Back</h2>
+            <p class="auth-view-sub">Continue your journey toward harmony and positive energy.</p>
+            
+            <form id="signin-form" onsubmit="handleLogin(event)">
               <div class="form-group-premium">
-                <label for="signup-name">Full Name</label>
-                <input type="text" id="signup-name" placeholder="John Doe" required />
+                <label for="email">Email or Phone Number</label>
+                <input type="text" id="email" placeholder="you@example.com or 9876543210" required />
               </div>
 
+              <div class="form-group-premium relative">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="password" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('password', this)">Show</button>
+                </div>
+              </div>
+
+              <div class="form-row-premium">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="remember-me" />
+                  <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot-link">Forgot Password?</a>
+              </div>
+
+              <button type="submit" class="btn btn-primary full">Sign In</button>
+            </form>
+            
+            <div class="or-separator">OR</div>
+            <button type="button" class="btn btn-outline full" onclick="switchAuthTab('signup')">Create a new account</button>
+
+            <!-- Astrologer Login Entry Point -->
+            <div class="astro-section-divider"><span>Astrologer?</span></div>
+            <button type="button" class="astro-panel-btn" onclick="showAstrologerPanel('signin')">
+              <span class="btn-icon">🔮</span>
+              <span>
+                <span class="btn-label">Sign In as Astrologer</span>
+                <span class="btn-sub">Access your Vedic Expert Dashboard</span>
+              </span>
+            </button>
+          </div><!-- /signin-view -->
+
+          <!-- 2. CREATE ACCOUNT FORM (3-Step) -->
+          <div id="signup-view" class="auth-view-content hidden">
+
+            <!-- Progress Steps Indicator -->
+            <div id="signup-progress" style="display:flex; gap:8px; margin-bottom:20px; align-items:center;">
+              <div class="step-dot active" id="dot-1" style="width:28px;height:28px;border-radius:50%;background:var(--maroon);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">1</div>
+              <div style="flex:1;height:2px;background:var(--line);border-radius:2px;" id="line-1-2"></div>
+              <div class="step-dot" id="dot-2" style="width:28px;height:28px;border-radius:50%;background:var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">2</div>
+              <div style="flex:1;height:2px;background:var(--line);border-radius:2px;" id="line-2-3"></div>
+              <div class="step-dot" id="dot-3" style="width:28px;height:28px;border-radius:50%;background:var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">3</div>
+            </div>
+
+            <!-- ── STEP 1: Email or Phone + OTP ── -->
+            <div id="signup-step-1">
+              <h2 style="margin-bottom:4px;">Let's get you started</h2>
+              <p class="auth-view-sub">Enter your email or phone number to verify your identity.</p>
+
+              <!-- Input -->
+              <div class="form-group-premium" style="margin-top:16px;">
+                <label for="s1-contact">Email Address or Phone Number</label>
+                <div style="display:flex;gap:8px;">
+                  <input type="text" id="s1-contact" placeholder="you@example.com or 9876543210"
+                    style="flex:1;" oninput="s1DetectType(this.value)" />
+                  <button type="button" id="s1-send-btn" class="btn btn-outline"
+                    style="padding:10px 14px;font-size:0.82rem;white-space:nowrap;flex-shrink:0;"
+                    onclick="s1SendOtp()" disabled>Send OTP</button>
+                </div>
+                <p id="s1-contact-hint" style="font-size:0.76rem;color:var(--muted);margin-top:5px;"></p>
+              </div>
+
+              <!-- Inline OTP Entry (hidden until OTP sent) -->
+              <div id="s1-otp-row" class="hidden">
+                <div class="form-group-premium">
+                  <label>Enter the 4-digit OTP</label>
+                  <div style="display:flex;gap:8px;align-items:center;">
+                    <input type="text" id="s1-otp-input" maxlength="4" placeholder="1 2 3 4"
+                      style="flex:1;font-size:1.6rem;letter-spacing:10px;text-align:center;padding:10px;" />
+                    <button type="button" class="btn btn-primary" style="padding:10px 16px;font-size:0.85rem;flex-shrink:0;"
+                      onclick="s1VerifyOtp()">Verify</button>
+                  </div>
+                  <p style="font-size:0.75rem;color:var(--muted);margin-top:5px;">Demo: enter <strong>1234</strong> · <a href="#" onclick="s1SendOtp();return false;" style="color:var(--maroon);">Resend OTP</a></p>
+                </div>
+                <div id="s1-verified-banner" class="hidden"
+                  style="background:linear-gradient(135deg,#e8f8ef,#d5f5e3);border:1.5px solid #2ecc71;border-radius:10px;padding:10px 14px;font-size:0.84rem;font-weight:600;color:#1a7a42;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                  ✅ Verified successfully!
+                </div>
+              </div>
+
+              <button type="button" id="s1-next-btn" class="btn btn-primary full"
+                style="margin-top:8px;background:var(--muted);cursor:not-allowed;" disabled
+                onclick="s1Proceed()">Continue →</button>
+
+              <!-- Astrologer Entry -->
+              <div class="astro-section-divider"><span>Are you an Astrologer?</span></div>
+              <button type="button" class="astro-panel-btn" onclick="showAstrologerPanel('signup')">
+                <span class="btn-icon">🌟</span>
+                <span>
+                  <span class="btn-label">Register as Astrologer</span>
+                  <span class="btn-sub">Join our Vedic Expert community &amp; start consulting</span>
+                </span>
+              </button>
+            </div>
+
+            <!-- ── STEP 2: Other Contact + Password ── -->
+            <div id="signup-step-2" class="hidden">
+              <h2 style="margin-bottom:4px;">Verify &amp; Set Password</h2>
+              <p id="s2-sub" class="auth-view-sub"></p>
+
+              <form id="signup-form-2" onsubmit="s2Proceed(event)">
+                <!-- Dynamic second contact field -->
+                <div class="form-group-premium" id="s2-contact-group">
+                  <label id="s2-contact-label">—</label>
+                  <div style="display:flex;gap:8px;">
+                    <input type="text" id="s2-contact" placeholder="—" style="flex:1;"
+                      oninput="s2EnableSend()" />
+                    <button type="button" id="s2-send-btn" class="btn btn-outline"
+                      style="padding:10px 14px;font-size:0.82rem;white-space:nowrap;flex-shrink:0;"
+                      onclick="s2SendOtp()" disabled>Send OTP</button>
+                  </div>
+                </div>
+
+                <!-- Inline OTP for step 2 -->
+                <div id="s2-otp-row" class="hidden">
+                  <div class="form-group-premium">
+                    <label>Enter the 4-digit OTP</label>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <input type="text" id="s2-otp-input" maxlength="4" placeholder="1 2 3 4"
+                        style="flex:1;font-size:1.6rem;letter-spacing:10px;text-align:center;padding:10px;" />
+                      <button type="button" class="btn btn-primary" style="padding:10px 16px;font-size:0.85rem;flex-shrink:0;"
+                        onclick="s2VerifyOtp()">Verify</button>
+                    </div>
+                    <p style="font-size:0.75rem;color:var(--muted);margin-top:5px;">Demo: enter <strong>1234</strong> · <a href="#" onclick="s2SendOtp();return false;" style="color:var(--maroon);">Resend</a></p>
+                  </div>
+                  <div id="s2-verified-banner" class="hidden"
+                    style="background:linear-gradient(135deg,#e8f8ef,#d5f5e3);border:1.5px solid #2ecc71;border-radius:10px;padding:10px 14px;font-size:0.84rem;font-weight:600;color:#1a7a42;display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+                    ✅ Verified successfully!
+                  </div>
+                </div>
+
+                <!-- Password fields -->
+                <div class="form-group-premium" style="margin-top:4px;">
+                  <label for="signup-password">Password</label>
+                  <div class="password-wrapper">
+                    <input type="password" id="signup-password" placeholder="Min 8 chars, letters &amp; numbers" required />
+                    <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('signup-password',this)">Show</button>
+                  </div>
+                </div>
+
+                <div class="form-group-premium">
+                  <label for="signup-confirm-password">Confirm Password</label>
+                  <div class="password-wrapper">
+                    <input type="password" id="signup-confirm-password" placeholder="••••••••" required />
+                    <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('signup-confirm-password',this)">Show</button>
+                  </div>
+                </div>
+
+                <div class="form-group-premium">
+                  <label class="checkbox-label" style="align-items:flex-start;">
+                    <input type="checkbox" id="signup-terms" required style="margin-top:4px;" />
+                    <span style="font-size:0.84rem;line-height:1.4;">I agree to the
+                      <a href="#" style="text-decoration:underline;font-weight:600;color:var(--maroon);">Terms of Service</a>
+                      and <a href="#" style="text-decoration:underline;font-weight:600;color:var(--maroon);">Privacy Policy</a></span>
+                  </label>
+                </div>
+
+                <input type="hidden" id="signup-as-astrologer" value="false" />
+
+                <div style="display:flex;gap:10px;margin-top:6px;">
+                  <button type="button" class="btn btn-outline" style="flex:1;" onclick="goToStep(1)">← Back</button>
+                  <button type="submit" id="s2-next-btn" class="btn btn-primary" style="flex:2;background:var(--muted);cursor:not-allowed;" disabled>Continue →</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- ── STEP 3: Personal Details ── -->
+            <div id="signup-step-3" class="hidden">
+              <h2 style="margin-bottom:4px;">Your Astrological Profile</h2>
+              <p class="auth-view-sub">Helps us personalize Rudraksha &amp; Gemstone recommendations.</p>
+
+              <form id="signup-form-3" onsubmit="handleDoneSubmit(event)" style="margin-top:14px;">
+                <div class="form-group-premium">
+                  <label for="signup-name">Full Name</label>
+                  <input type="text" id="signup-name" placeholder="John Doe" required />
+                </div>
+
+                <div class="form-group-premium">
+                  <label for="signup-gender">Gender</label>
+                  <select id="signup-gender" required style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#fff;font-family:inherit;">
+                    <option value="">Select</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="form-row-premium">
+                  <div class="form-group-premium">
+                    <label for="signup-dob">Date of Birth</label>
+                    <input type="date" id="signup-dob" required />
+                  </div>
+                  <div class="form-group-premium">
+                    <label for="signup-tob">Time of Birth</label>
+                    <input type="time" id="signup-tob" />
+                  </div>
+                </div>
+
+                <div class="form-group-premium">
+                  <label for="signup-pob">Place of Birth</label>
+                  <input type="text" id="signup-pob" placeholder="Mumbai, MH, India" />
+                </div>
+
+                <div class="form-group-premium">
+                  <label for="signup-address">Street Address</label>
+                  <input type="text" id="signup-address" placeholder="123, Lotus Lane, Sector 4" />
+                </div>
+
+                <div style="display:flex;gap:10px;margin-top:10px;">
+                  <button type="button" class="btn btn-outline" style="flex:1;" onclick="goToStep(2)">← Back</button>
+                  <button type="submit" class="btn btn-primary" style="flex:2;">Create Account 🎉</button>
+                </div>
+              </form>
+            </div>
+
+          </div><!-- /signup-view -->
+        </div><!-- /main-view -->
+
+        <!-- ===================== VIEW: ASTROLOGER PANEL ===================== -->
+        <div id="astro-signup-view" class="hidden">
+
+          <!-- Astrologer Sign In -->
+          <div id="astro-signin-section" class="hidden">
+            <button type="button" class="back-link" onclick="hideAstrologerPanel()">← Back to Customer Login</button>
+            <div class="astro-badge-header">🔮 Astrologer Sign In</div>
+            <h2 style="margin-bottom: 6px;">Welcome, Guru Ji</h2>
+            <p class="auth-view-sub">Sign in to access your Vedic Expert Dashboard.</p>
+
+            <form id="astro-signin-form" onsubmit="handleAstrologerLogin(event)">
               <div class="form-group-premium">
-                <label for="signup-phone">Phone Number</label>
+                <label for="astro-email">Registered Email</label>
+                <input type="email" id="astro-email" placeholder="you@example.com" required />
+              </div>
+
+              <div class="form-group-premium">
+                <label for="astro-password">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="astro-password" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('astro-password', this)">Show</button>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary full" style="background: var(--gold);">Sign In to Dashboard →</button>
+            </form>
+
+            <div class="astro-section-divider"><span>New Astrologer?</span></div>
+            <button type="button" class="astro-panel-btn" onclick="showAstrologerPanel('signup')">
+              <span class="btn-icon">🌟</span>
+              <span>
+                <span class="btn-label">Register as Astrologer</span>
+                <span class="btn-sub">Create your expert account</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Astrologer Sign Up -->
+          <div id="astro-signup-section" class="hidden">
+            <button type="button" class="back-link" onclick="hideAstrologerPanel()">← Back to Customer Login</button>
+            <div class="astro-badge-header">🌟 Astrologer Registration</div>
+            <h2 style="margin-bottom: 6px;">Join as Vedic Expert</h2>
+            <p class="auth-view-sub">Create your certified astrologer account to start consulting clients.</p>
+
+            <form id="astro-register-form" onsubmit="handleAstrologerSignup(event)">
+              <div class="form-group-premium">
+                <label for="astro-reg-name">Full Name / Guru Name</label>
+                <input type="text" id="astro-reg-name" placeholder="Pandit Ramesh Sharma" required />
+              </div>
+
+              <div class="form-group-premium">
+                <label for="astro-reg-email">Email Address</label>
+                <input type="email" id="astro-reg-email" placeholder="guru@example.com" required />
+              </div>
+
+              <div class="form-group-premium">
+                <label for="astro-reg-phone">Phone Number</label>
                 <div class="phone-verify-wrapper" style="display: flex; gap: 8px;">
-                  <input type="tel" id="signup-phone" placeholder="9876543210" maxlength="10" pattern="\d{10}" required style="flex: 1;" />
-                  <button type="button" id="btn-verify-phone" class="btn btn-outline" style="padding: 10px 16px; font-size: 0.85rem;" onclick="triggerPhoneVerification()">Verify</button>
-                  <span id="phone-verified-badge" class="hidden" style="color: var(--marigold); font-weight: 600; align-self: center; font-size: 0.9rem;">✓ Verified</span>
+                  <input type="tel" id="astro-reg-phone" placeholder="9876543210" maxlength="10" pattern="\d{10}" required style="flex: 1;" />
+                  <button type="button" id="astro-btn-verify-phone" class="btn btn-outline" style="padding: 10px 16px; font-size: 0.85rem;" onclick="triggerAstroPhoneVerification()">Verify</button>
+                  <span id="astro-phone-verified-badge" class="hidden" style="color: var(--marigold); font-weight: 600; align-self: center; font-size: 0.9rem;">✓ Verified</span>
                 </div>
               </div>
 
               <div class="form-group-premium">
-                <label for="signup-password">Password</label>
+                <label for="astro-reg-speciality">Speciality</label>
+                <select id="astro-reg-speciality" style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--line); background:#fff; font-family:inherit;" required>
+                  <option value="">Select your speciality</option>
+                  <option>Vedic Astrology</option>
+                  <option>Numerology</option>
+                  <option>Vastu Shastra</option>
+                  <option>Tarot Reading</option>
+                  <option>KP Astrology</option>
+                  <option>Palmistry</option>
+                  <option>Nadi Astrology</option>
+                </select>
+              </div>
+
+              <div class="form-group-premium">
+                <label for="astro-reg-password">Password</label>
                 <div class="password-wrapper">
-                  <input type="password" id="signup-password" placeholder="••••••••" required />
-                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('signup-password', this)">Show</button>
+                  <input type="password" id="astro-reg-password" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('astro-reg-password', this)">Show</button>
                 </div>
               </div>
 
               <div class="form-group-premium">
-                <label for="signup-confirm-password">Confirm Password</label>
+                <label for="astro-reg-confirm">Confirm Password</label>
                 <div class="password-wrapper">
-                  <input type="password" id="signup-confirm-password" placeholder="••••••••" required />
-                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('signup-confirm-password', this)">Show</button>
+                  <input type="password" id="astro-reg-confirm" placeholder="••••••••" required />
+                  <button type="button" class="btn-toggle-password" onclick="togglePasswordVisibility('astro-reg-confirm', this)">Show</button>
                 </div>
               </div>
 
               <div class="form-group-premium">
                 <label class="checkbox-label" style="align-items: flex-start;">
-                  <input type="checkbox" id="signup-terms" required style="margin-top: 4px;" />
-                  <span style="font-size: 0.84rem; line-height: 1.4;">I agree to the <a href="#" style="text-decoration: underline; font-weight: 600; color: var(--maroon);">Terms of Service</a> and <a href="#" style="text-decoration: underline; font-weight: 600; color: var(--maroon);">Privacy Policy</a></span>
+                  <input type="checkbox" id="astro-terms" required style="margin-top: 4px;" />
+                  <span style="font-size: 0.84rem; line-height: 1.4;">I agree to the <a href="#" style="text-decoration: underline; font-weight: 600; color: var(--maroon);">Astrologer Terms</a> and <a href="#" style="text-decoration: underline; font-weight: 600; color: var(--maroon);">Privacy Policy</a></span>
                 </label>
               </div>
 
-              <button type="submit" id="btn-signup-continue" class="btn btn-primary full" style="background: var(--muted); cursor: not-allowed;" disabled>Continue</button>
+              <button type="submit" id="astro-submit-btn" class="btn btn-primary full" style="background: var(--muted); cursor: not-allowed;" disabled>Create Astrologer Account →</button>
             </form>
-          </div>
 
-          <!-- Step 2: Astrological Details -->
-          <div id="signup-step-2" class="hidden">
-            <h2>Astrological Details</h2>
-            <p class="auth-view-sub">Required for personalized Rudraksha/Gemstone matching.</p>
-
-            <form id="signup-form-2" onsubmit="handleDoneSubmit(event)">
-              <div class="form-group-premium">
-                <label for="signup-email">Email Address</label>
-                <input type="email" id="signup-email" placeholder="john@example.com" required />
-              </div>
-
-              <div class="form-group-premium">
-                <label for="signup-gender">Gender</label>
-                <select id="signup-gender" required style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--line); background:#fff; font-family:inherit;">
-                  <option value="">Select</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
-                </select>
-              </div>
-
-              <div class="form-row-premium">
-                <div class="form-group-premium">
-                  <label for="signup-dob">Date of Birth</label>
-                  <input type="date" id="signup-dob" required />
-                </div>
-                <div class="form-group-premium">
-                  <label for="signup-tob">Time of Birth</label>
-                  <input type="time" id="signup-tob" />
-                </div>
-              </div>
-
-              <div class="form-group-premium">
-                <label for="signup-pob">Place of Birth (City, State, Country)</label>
-                <input type="text" id="signup-pob" placeholder="Mumbai, MH, India" />
-              </div>
-
-              <div class="form-group-premium">
-                <label for="signup-address">Street Address</label>
-                <input type="text" id="signup-address" placeholder="123, Lotus Lane, Sector 4" />
-              </div>
-
-              <div class="form-row-premium" style="gap: 12px; margin-top: 10px;">
-                <button type="button" class="btn btn-outline" style="flex: 1;" onclick="goBackToStep1()">Back</button>
-                <button type="submit" class="btn btn-primary" style="flex: 2;">Done</button>
-              </div>
-            </form>
+            <div class="astro-section-divider"><span>Already registered?</span></div>
+            <button type="button" class="astro-panel-btn" onclick="showAstrologerPanel('signin')">
+              <span class="btn-icon">🔮</span>
+              <span>
+                <span class="btn-label">Sign In to Dashboard</span>
+                <span class="btn-sub">Access your existing expert account</span>
+              </span>
+            </button>
           </div>
 
         </div>
@@ -218,7 +538,7 @@
     </div>
   </div>
 
-  <!-- Trust Footer Ribbon (Figma style) -->
+  <!-- Trust Footer Ribbon -->
   <div class="trust-strip-premium" style="margin: 40px auto 80px; max-width: 1200px;">
     <span>Temple Energized</span>
     <span>50,000+ Customers</span>
@@ -228,14 +548,17 @@
     <span>Trusted Across India</span>
   </div>
 
-  <!-- Phone OTP Modal -->
+  <!-- Phone OTP Modal (shared by user signup & astrologer signup) -->
   <div id="otp-modal" class="modal-overlay hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000;">
     <div class="auth-card-premium" style="max-width: 360px; width: 90%; text-align: center;">
       <h2>Enter OTP</h2>
-      <p class="auth-view-sub" style="margin-bottom: 20px;">We sent a 4-digit code to your phone.</p>
+      <p class="auth-view-sub" style="margin-bottom: 6px;">We sent a 4-digit code to:</p>
+      <p id="otp-phone-display" style="font-weight: 700; color: var(--maroon); margin-bottom: 16px; font-size: 1.1rem;"></p>
       <form id="otp-form" onsubmit="verifyOtp(event)">
-        <input type="text" id="otp-input" maxlength="4" placeholder="••••" required style="font-size: 2rem; text-align: center; letter-spacing: 12px; padding: 12px; margin-bottom: 18px; width: 80%; border: 1.5px solid var(--line); border-radius: 10px;" />
-        <button type="submit" class="btn btn-primary full">Verify</button>
+        <input type="text" id="otp-input" maxlength="4" placeholder="••••" required
+          style="font-size: 2rem; text-align: center; letter-spacing: 12px; padding: 12px; margin-bottom: 18px; width: 80%; border: 1.5px solid var(--line); border-radius: 10px; outline: none;" />
+        <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 14px;">Enter <strong>1234</strong> to verify (demo mode)</p>
+        <button type="submit" class="btn btn-primary full">Verify OTP</button>
         <button type="button" class="btn btn-outline full" style="margin-top: 10px;" onclick="closeOtpModal()">Cancel</button>
       </form>
     </div>
@@ -245,5 +568,170 @@
   <script src="../js/config.js"></script>
   <script src="../js/auth.js"></script>
   <script src="../js/signup.js"></script>
+  <script>
+    // -------- Astrologer Panel Toggle --------
+    function showAstrologerPanel(mode) {
+      document.getElementById("main-view").classList.add("hidden");
+      document.getElementById("astro-signup-view").classList.remove("hidden");
+
+      // Show correct sub-section
+      document.getElementById("astro-signin-section").classList.add("hidden");
+      document.getElementById("astro-signup-section").classList.add("hidden");
+
+      if (mode === "signin") {
+        document.getElementById("astro-signin-section").classList.remove("hidden");
+      } else {
+        document.getElementById("astro-signup-section").classList.remove("hidden");
+      }
+
+      // Update sidebar content to astrologer version
+      document.getElementById("sidebar-user-content").classList.add("hidden");
+      document.getElementById("sidebar-astro-content").classList.remove("hidden");
+    }
+
+    // Auto-open astrologer panel if ?astro=1 in URL (from navbar button)
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("astro") === "1") {
+        showAstrologerPanel("signin");
+      }
+    });
+
+    function hideAstrologerPanel() {
+      document.getElementById("astro-signup-view").classList.add("hidden");
+      document.getElementById("main-view").classList.remove("hidden");
+      document.getElementById("sidebar-user-content").classList.remove("hidden");
+      document.getElementById("sidebar-astro-content").classList.add("hidden");
+    }
+
+    // -------- Astrologer Login --------
+    async function handleAstrologerLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("astro-email").value.trim();
+      const password = document.getElementById("astro-password").value;
+
+      if (!email || !password) return showToast("Please fill in all fields");
+      if (password.length < 8) return showToast("Password must be at least 8 characters");
+
+      showToast("Signing in...");
+      const { data: authData, error } = await db.auth.signInWithPassword({ email, password });
+      if (error) return showToast(error.message);
+
+      // Verify this account is actually an astrologer
+      const role = authData.user?.user_metadata?.role;
+      if (role !== "astrologer") {
+        await db.auth.signOut();
+        return showToast("This account is not registered as an astrologer. Please use the regular login.");
+      }
+
+      showToast("Welcome, Guru Ji! 🙏");
+      setTimeout(() => (window.location.href = "astrologer-dashboard.html"), 900);
+    }
+
+    // Track which form triggered OTP
+    window._otpContext = "user"; // "user" or "astro"
+    window.isAstroPhoneVerified = false;
+
+    // -------- Astrologer Phone Verification --------
+    function triggerAstroPhoneVerification() {
+      const phone = document.getElementById("astro-reg-phone").value.trim();
+      if (!phone || !/^\d{10}$/.test(phone)) return showToast("Please enter a valid 10-digit phone number first");
+      window._otpContext = "astro";
+      const display = document.getElementById("otp-phone-display");
+      if (display) display.textContent = "+91 " + phone;
+      document.getElementById("otp-input").value = "";
+      document.getElementById("otp-modal").classList.remove("hidden");
+      document.getElementById("otp-input").focus();
+    }
+
+    // Override verifyOtp from signup.js to support both contexts
+    function verifyOtp(e) {
+      e.preventDefault();
+      const otp = document.getElementById("otp-input").value.replace(/\s/g, '');
+      if (otp !== "1234") return showToast("Invalid OTP. Enter 1234.");
+
+      if (window._otpContext === "astro") {
+        window.isAstroPhoneVerified = true;
+        const phoneInput = document.getElementById("astro-reg-phone");
+        if (phoneInput) phoneInput.readOnly = true;
+        document.getElementById("astro-btn-verify-phone").classList.add("hidden");
+        document.getElementById("astro-phone-verified-badge").classList.remove("hidden");
+        // Enable submit button
+        const submitBtn = document.getElementById("astro-submit-btn");
+        if (submitBtn) {
+          submitBtn.removeAttribute("disabled");
+          submitBtn.style.background = "var(--gold)";
+          submitBtn.style.cursor = "pointer";
+        }
+        showToast("Phone verified! ✓");
+      } else {
+        // Regular user flow (signup.js)
+        window.isPhoneVerified = true;
+        const phoneInput = document.getElementById("signup-phone");
+        if (phoneInput) phoneInput.readOnly = true;
+        const verifyBtn = document.getElementById("btn-verify-phone");
+        if (verifyBtn) verifyBtn.classList.add("hidden");
+        const badge = document.getElementById("phone-verified-badge");
+        if (badge) badge.classList.remove("hidden");
+        if (typeof updateContinueButtonState === "function") updateContinueButtonState();
+        showToast("Phone verified successfully! ✓");
+      }
+
+      closeOtpModal();
+      window._otpContext = "user"; // reset
+    }
+
+    // Override triggerPhoneVerification for user form to show phone number in modal
+    function triggerPhoneVerification() {
+      const phone = document.getElementById("signup-phone").value.trim();
+      if (!phone || !/^\d{10}$/.test(phone)) return showToast("Please enter a valid 10-digit phone number first");
+      window._otpContext = "user";
+      const display = document.getElementById("otp-phone-display");
+      if (display) display.textContent = "+91 " + phone;
+      document.getElementById("otp-input").value = "";
+      document.getElementById("otp-modal").classList.remove("hidden");
+      document.getElementById("otp-input").focus();
+    }
+  </script>
+  <script>
+    // -------- Astrologer Signup --------
+    async function handleAstrologerSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById("astro-reg-name").value.trim();
+      const email = document.getElementById("astro-reg-email").value.trim();
+      const phone = document.getElementById("astro-reg-phone").value.trim();
+      const speciality = document.getElementById("astro-reg-speciality").value;
+      const password = document.getElementById("astro-reg-password").value;
+      const confirm = document.getElementById("astro-reg-confirm").value;
+
+      if (!name || !email || !phone || !speciality || !password) return showToast("Please fill in all required fields");
+      if (!/^\d{10}$/.test(phone)) return showToast("Phone number must be exactly 10 digits");
+      if (!window.isAstroPhoneVerified) return showToast("Please verify your phone number first");
+      if (password.length < 8) return showToast("Password must be at least 8 characters");
+      if (password !== confirm) return showToast("Passwords do not match");
+
+      showToast("Creating your astrologer account...");
+      try {
+        const res = await fetch(API_BASE + "/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fullName: name, email, phone, password, otp: "1234", role: "astrologer", speciality })
+        });
+        const data = await res.json();
+        if (!res.ok) return showToast(data.error || "Signup failed");
+
+        // Auto sign in
+        const { error: signInErr } = await db.auth.signInWithPassword({ email, password });
+        if (signInErr) {
+          showToast("Account created! Please sign in as Astrologer.");
+          return;
+        }
+        showToast("Welcome to Aroham Astrologer Portal! 🌟");
+        setTimeout(() => (window.location.href = "astrologer-dashboard.html"), 900);
+      } catch (err) {
+        showToast("Failed to create account: " + err.message);
+      }
+    }
+  </script>
 </body>
 </html>

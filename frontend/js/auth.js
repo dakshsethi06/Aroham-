@@ -1,8 +1,8 @@
 // ---------- Auth (Supabase email/password) ----------
 
 async function getUser() {
-  const { data } = await db.auth.getUser();
-  return data.user;
+  const { data } = await db.auth.getSession();
+  return data.session?.user || null;
 }
 
 async function requireLogin() {
@@ -23,6 +23,9 @@ async function updateAuthLink() {
   const profileLink = document.getElementById("profile-nav-link");
   const ordersLink = document.getElementById("orders-nav-link");
   const adminLink = document.getElementById("admin-nav-link");
+  const astrologerLink = document.getElementById("astrologer-nav-link");
+  const chatLink = document.getElementById("chat-nav-link");
+  const astroLoginBtn = document.getElementById("astro-login-btn"); // navbar "Astrologer Login" button
 
   if (user) {
     link.textContent = "Logout";
@@ -37,9 +40,30 @@ async function updateAuthLink() {
       showToast("Logged out");
       setTimeout(() => (window.location.href = ROOT + "index.html"), 800);
     };
+
+    // Hide the Astrologer Login navbar button when logged in
+    if (astroLoginBtn) astroLoginBtn.classList.add("hidden");
     
-    if (profileLink) profileLink.classList.remove("hidden");
-    if (ordersLink) ordersLink.classList.remove("hidden");
+    // Check user's role to toggle the right links
+    try {
+      const role = user.user_metadata?.role;
+
+      if (role === "astrologer") {
+        if (astrologerLink) astrologerLink.classList.remove("hidden");
+        if (profileLink) profileLink.classList.add("hidden");
+        if (ordersLink) ordersLink.classList.add("hidden");
+        if (chatLink) chatLink.classList.add("hidden");
+      } else {
+        if (astrologerLink) astrologerLink.classList.add("hidden");
+        if (profileLink) profileLink.classList.remove("hidden");
+        if (ordersLink) ordersLink.classList.remove("hidden");
+        if (chatLink) chatLink.classList.remove("hidden");
+      }
+    } catch (_) {
+      if (profileLink) profileLink.classList.remove("hidden");
+      if (ordersLink) ordersLink.classList.remove("hidden");
+    }
+
     // Only show Admin link if backend confirms this email is whitelisted
     if (adminLink) {
       try {
@@ -53,9 +77,14 @@ async function updateAuthLink() {
     link.href = ROOT + "pages/login.html";
     link.onclick = null;
     
+    // Show Astrologer Login button when logged out
+    if (astroLoginBtn) astroLoginBtn.classList.remove("hidden");
+
     if (profileLink) profileLink.classList.add("hidden");
     if (ordersLink) ordersLink.classList.add("hidden");
     if (adminLink) adminLink.classList.add("hidden");
+    if (astrologerLink) astrologerLink.classList.add("hidden");
+    if (chatLink) chatLink.classList.add("hidden");
   }
 }
 
@@ -94,7 +123,7 @@ async function handleLogin(e) {
   }
 
   showToast("Logging in...");
-  const { error } = await db.auth.signInWithPassword({ email, password });
+  const { data: authData, error } = await db.auth.signInWithPassword({ email, password });
   if (error) return showToast(error.message);
   
   // Clear local cart of previous user (Bug 5)
@@ -104,6 +133,30 @@ async function handleLogin(e) {
   }
 
   showToast("Welcome back!");
+  const role = authData.user?.user_metadata?.role;
+  await handlePostLoginRedirect(role);
+}
+
+async function handlePostLoginRedirect(role) {
+  if (role === "astrologer") {
+    setTimeout(() => (window.location.href = ROOT + "pages/astrologer-dashboard.html"), 900);
+    return;
+  }
+  
+  const intentStr = localStorage.getItem("aroham_buy_now_intent");
+  if (intentStr) {
+    try {
+      const intent = JSON.parse(intentStr);
+      localStorage.removeItem("aroham_buy_now_intent");
+      showToast("Adding item to cart...");
+      await api("/cart/buy-now", { method: "POST", body: JSON.stringify({ productId: intent.productId, qty: intent.qty }) });
+      setTimeout(() => (window.location.href = ROOT + "pages/cart.html?checkout=buy_now"), 900);
+      return;
+    } catch (e) {
+      console.error("Failed to process buy now intent:", e);
+    }
+  }
+  
   setTimeout(() => (window.location.href = ROOT + "index.html"), 900);
 }
 
@@ -125,6 +178,15 @@ async function checkRedirect() {
   if (user) {
     const path = window.location.pathname;
     if (path.endsWith("login.html") || path.endsWith("signup.html")) {
+      // Check role — astrologers always go to their dashboard
+      try {
+        const role = user.user_metadata?.role;
+
+        if (role === "astrologer") {
+          window.location.href = ROOT + "pages/astrologer-dashboard.html";
+          return;
+        }
+      } catch (_) {}
       window.location.href = ROOT + "index.html";
     }
   }

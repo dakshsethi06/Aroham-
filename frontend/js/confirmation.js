@@ -6,21 +6,28 @@ function showInvoiceToast() {
 
 async function loadConfirmationDetails() {
   const params = new URLSearchParams(window.location.search);
-  const orderId = params.get("orderId");
-  if (!orderId) {
-    showToast("No order ID provided. Redirecting...");
-    setTimeout(() => { window.location.href = "../index.html"; }, 1500);
-    return;
-  }
+  let orderId = params.get("orderId");
+  console.log("[Confirmation] Extracted orderId from URL:", orderId);
 
   const user = await requireLogin();
   if (!user) return;
 
   try {
     const orders = await api("/orders");
-    const order = orders.find(o => String(o.id) === String(orderId) || String(o.id).slice(0, 8) === String(orderId));
+    let order;
+    
+    if (orderId) {
+      order = orders.find(o => String(o.id) === String(orderId) || String(o.id).slice(0, 8) === String(orderId));
+    } else if (orders.length > 0) {
+      console.log("[Confirmation] No orderId in URL, falling back to latest order:", orders[0].id);
+      order = orders[0];
+      orderId = order.id;
+    }
+
     if (!order) {
-      throw new Error("Order not found");
+      showToast("No orders found. Redirecting...");
+      setTimeout(() => { window.location.href = "../index.html"; }, 2500);
+      return;
     }
 
     // Populate order header
@@ -93,6 +100,7 @@ async function loadConfirmationDetails() {
     }
 
   } catch (e) {
+    console.error("[Confirmation] Failed to load order details:", e);
     showToast("Could not load order details: " + e.message);
   }
 }

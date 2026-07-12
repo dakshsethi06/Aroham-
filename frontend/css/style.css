@@ -17,6 +17,10 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* Global utility — used by auth.js to show/hide nav links */
+.hidden { display: none !important; }
+
+
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--ivory);
