@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sacred Store Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --maroon-deep:#5c1b23;
+    --maroon:#7a2430;
+    --maroon-light:#8f2c39;
+    --gold:#e3b94e;
+    --gold-soft:#f0d38a;
+    --cream:#f6ecdd;
+    --cream-dim:#d9c3ab;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#e9e4da;
+    display:flex;
+    justify-content:center;
+    padding:40px 20px;
+    font-family:'Inter',sans-serif;
+  }
+
+  .card{
+    width:610px;
+    border-radius:22px;
+    background:linear-gradient(160deg,var(--maroon) 0%,var(--maroon-deep) 100%);
+    padding:34px 34px 30px;
+    box-shadow:0 20px 50px rgba(92,27,35,0.35);
+    color:var(--cream);
+  }
+
+  h1{
+    font-family:'Playfair Display',serif;
+    font-size:40px;
+    font-weight:700;
+    margin:0 0 8px;
+    color:var(--cream);
+    letter-spacing:0.3px;
+  }
+
+  .subhead{
+    margin:0 0 20px;
+    color:var(--cream-dim);
+    font-size:15px;
+    line-height:1.5;
+    max-width:480px;
+  }
+
+  .thumbs{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:12px;
+    margin-bottom:26px;
+  }
+  .thumbs img, .thumbs .ph{
+    width:100%;
+    aspect-ratio:1/0.92;
+    border-radius:12px;
+    object-fit:cover;
+    display:block;
+  }
+  .ph{
+    background:#1c1c1c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#555;
+    font-size:11px;
+  }
+
+  /* ===== filled negative space ===== */
+
+  .trust-strip{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 4px;
+    border-top:1px solid rgba(230,201,138,0.18);
+    border-bottom:1px solid rgba(230,201,138,0.18);
+    margin-bottom:20px;
+  }
+  .trust-item{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:12.5px;
+    color:var(--cream-dim);
+    font-weight:500;
+  }
+  .trust-item svg{
+    flex-shrink:0;
+    stroke:var(--gold);
+  }
+
+  .chips{
+    display:flex;
+    gap:10px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .chip{
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(230,201,138,0.35);
+    font-size:13px;
+    font-weight:500;
+    color:var(--gold-soft);
+    background:rgba(230,201,138,0.06);
+    letter-spacing:0.2px;
+  }
+  .chip.active{
+    background:var(--gold);
+    color:var(--maroon-deep);
+    border-color:var(--gold);
+    font-weight:600;
+  }
+
+  .social-proof{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:28px;
+    font-size:13px;
+    color:var(--cream-dim);
+  }
+  .stars{ color:var(--gold); letter-spacing:1px; font-size:14px; }
+  .social-proof b{ color:var(--cream); }
+  .dot{ width:3px; height:3px; border-radius:50%; background:var(--cream-dim); display:inline-block; }
+
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--gold);
+    color:var(--maroon-deep);
+    font-weight:700;
+    font-size:15px;
+    padding:13px 26px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    font-family:'Inter',sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>Sacred Store</h1>
+  <p class="subhead">Yantras, Rudraksha, Crystals, Pendants &amp; complete Vastu remedies — all temple energized.</p>
+
+  <div class="thumbs">
+    <div class="ph">Bagla Mukhi Yantra</div>
+    <div class="ph">Gemstone Pendant</div>
+    <div class="ph">Vastu Yantra</div>
+  </div>
+
+  <!-- NEW: trust strip -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2C9 6 7 9 7 13a5 5 0 0 0 10 0c0-4-2-7-5-11Z"/></svg>
+      Temple Energized
+    </div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      Certified Authentic
+    </div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="7" width="14" height="10" rx="1.5"/><path d="M17 10h2.5L21 13v4h-4"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="16.5" cy="18.5" r="1.5"/></svg>
+      Free Shipping
+    </div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+      COD Available
+    </div>
+  </div>
+
+  <!-- NEW: category chips -->
+  <div class="chips">
+    <span class="chip active">All</span>
+    <span class="chip">Yantras</span>
+    <span class="chip">Rudraksha</span>
+    <span class="chip">Crystals</span>
+    <span class="chip">Pendants</span>
+  </div>
+
+  <!-- NEW: social proof -->
+  <div class="social-proof">
+    <span class="stars">★★★★★</span>
+    <b>4.8</b>
+    <span class="dot"></span>
+    12,000+ devotees served
+  </div>
+
+  <button class="cta">Shop Now →</button>
+</div>
+
+</body>
+</html>

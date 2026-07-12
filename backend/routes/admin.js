@@ -84,4 +84,62 @@ router.post("/cancel", requireAuth, requireAdmin, async (req, res) => {
   }
 });
 
+// POST /api/admin/generate-label — manually trigger Shiprocket label creation
+router.post("/generate-label", requireAuth, requireAdmin, async (req, res) => {
+  const { orderId } = req.body;
+  if (!orderId) return res.status(400).json({ error: "orderId required" });
+
+  try {
+    const { data: order } = await supabase.from("orders").select("*, users(*)").eq("id", orderId).single();
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    if (order.shipment_id) return res.status(400).json({ error: "Label already generated" });
+
+    const { data: items } = await supabase.from("order_items").select("*").eq("order_id", orderId);
+
+    if (process.env.SHIPROCKET_EMAIL && process.env.SHIPROCKET_PASSWORD) {
+      const { ShiprocketService } = require("../services/shiprocket");
+      const shiprocket = new ShiprocketService(process.env.SHIPROCKET_EMAIL, process.env.SHIPROCKET_PASSWORD);
+      await shiprocket.initialize();
+
+      const user = order.users || {};
+      const addr = order.address || {};
+      
+      const orderData = {
+        order_id: order.id,
+        customer_name: addr.name || user.full_name || "Customer",
+        address: addr.address || "No address provided",
+        city: addr.city || "Unknown",
+        pincode: addr.pincode || "000000",
+        state: addr.state || addr.city || "Unknown", 
+        phone: addr.phone || user.phone || "0000000000",
+        email: addr.email || user.email || "noemail@example.com",
+        sub_total: order.amount / 100, // paise to INR
+        items: items.map(i => ({
+          name: i.name,
+          sku: `SKU-${i.product_id}`,
+          units: i.qty,
+          selling_price: i.price / 100
+        }))
+      };
+
+      const result = await shiprocket.processFulfillment(orderData);
+      
+      if (result.success) {
+        await supabase.from("orders").update({
+          shipment_id: result.shipmentId,
+          awb_code: result.awbData?.response?.data?.awb_code || null,
+          label_url: result.labelUrl
+        }).eq("id", orderId);
+        res.json({ success: true, label_url: result.labelUrl });
+      } else {
+        res.status(500).json({ error: "Shiprocket API Error: " + (result.error.message || JSON.stringify(result.error)) });
+      }
+    } else {
+      res.status(500).json({ error: "Shiprocket credentials missing in environment" });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 module.exports = router;

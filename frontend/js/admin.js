@@ -55,7 +55,9 @@
 
     const labelBtn = o.label_url
       ? `<a href="${o.label_url}" target="_blank" class="btn-label">🖨 Print Label</a>`
-      : '';
+      : o.status === "CONFIRMED"
+        ? `<button onclick="generateLabel('${o.id}', this)" class="btn-label" style="background:#1e824c;">📦 Generate Label</button>`
+        : '';
 
     const cancelBtn = o.status === "CANCELLED"
       ? '<span class="btn-cancel done">Cancelled</span>'
@@ -78,6 +80,32 @@
     </tr>`;
   }).join("");
 })();
+
+async function generateLabel(orderId, btn) {
+  btn.disabled = true;
+  btn.textContent = "Generating...";
+  try {
+    const session = (await db.auth.getSession()).data.session;
+    const res = await fetch(API_BASE + "/admin/generate-label", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + session.access_token },
+      body: JSON.stringify({ orderId })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showToast("Label generated successfully!");
+      setTimeout(() => location.reload(), 800);
+    } else {
+      btn.disabled = false;
+      btn.textContent = "📦 Generate Label";
+      alert("Failed: " + (data.error || "Unknown error"));
+    }
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = "📦 Generate Label";
+    alert("Error: " + e.message);
+  }
+}
 
 async function cancelOrder(orderId, btn) {
   if (!confirm("Are you sure you want to cancel this order and refund the customer?")) return;
